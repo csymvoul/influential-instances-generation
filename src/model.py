@@ -1,5 +1,6 @@
 import pandas as pd
 from src.models_enum import ModelType, ModelName
+from src.data import Data
 from sklearn.model_selection import train_test_split
 
 class Model: 
@@ -11,7 +12,7 @@ class Model:
         It also provides methods to evaluate and visualize the models.
     """
 
-    def __init__(self, model: ModelName = ModelName.LogisticRegression , dataset: pd.DataFrame = None) -> None:
+    def __init__(self, data: Data = Data(), model: ModelName = ModelName.LogisticRegression ) -> None:
         """ 
         Description:
             The constructor of the class `Model`.
@@ -24,15 +25,15 @@ class Model:
                                     `ModelName.GradientBoostingClassifier`, `ModelName.XGBClassifier`,  
                                     `ModelName.CatBoostClassifier`, `ModelName.MLPClassifier`, `ModelName.GaussianNB`, 
                                     `ModelName.LinearDiscriminantAnalysis`, `ModelName.QuadraticDiscriminantAnalysis`.
-            * dataset (`pandas.DataFrame`): The dataset used for training of the model. 
-                * Default value is `None`.
+            * dataset (`Data`): The dataset used for training of the model. 
+                * Default value is the default `Data`.
         
         Returns:
             `None`
         """
         self.model = model
-        self.type = self.set_type()
-        self.dataset = dataset
+        self.set_type()
+        self.data = data
         self.X_train = None
         self.X_test = None
         self.y_train = None
@@ -101,7 +102,6 @@ class Model:
             self.model = QuadraticDiscriminantAnalysis()
         else:
             raise ValueError('Invalid model name.')
-        self.set_type()
 
     def set_type(self) -> None:
         """`set_type` function
@@ -160,7 +160,7 @@ class Model:
         """
         return self.type
 
-    def set_dataset(self, dataset: pd.DataFrame) -> None:
+    def set_data(self, data: Data) -> None:
         """`set_dataset` function
 
         Args:
@@ -169,7 +169,15 @@ class Model:
         Returns:
             `None`
         """
-        self.dataset = dataset
+        self.data = data
+    
+    def get_data(self) -> Data:
+        """`get_data` function
+
+        Returns:
+            `Data`: The dataset used for training of the model.
+        """
+        return self.data
     
     def train_test_split(self, test_size: float = 0.2, random_state: int = 42) -> None:
         """ 
