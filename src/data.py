@@ -24,11 +24,11 @@ class Data:
         Returns:
             `None`
         """
-        self.dataset_file_name = dataset_file_name.value
-        self.path = 'datasets/'+self.dataset_file_name+'.csv'
+        self.dataset_file_name = dataset_file_name
+        self.path = 'datasets/'+self.dataset_file_name.value+'.csv'
         self.dataset = pd.read_csv(self.path)
     
-    def get_dataset_file_name(self) -> str:
+    def get_dataset_file_name(self) -> Datasets:
         """
         `get_dataset_file_name` function
         
@@ -39,7 +39,7 @@ class Data:
             `self` (`Data`): The instance of the class `Data`.
 
         Returns:
-            dataset_file_name (`str`): The dataset file name.
+            dataset_file_name (`Datasets`): The dataset file name.
         """
         return self.dataset_file_name
 
@@ -58,7 +58,6 @@ class Data:
         self.dataset_file_name = dataset_file_name.value
         self.path = 'datasets/'+self.dataset_file_name+'.csv'
         self.dataset = pd.read_csv(self.path)
-
 
     def get_dataset(self) -> pd.DataFrame:
         """
