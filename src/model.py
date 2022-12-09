@@ -5,11 +5,10 @@ from sklearn.model_selection import train_test_split
 
 class Model: 
     """
-    Description:
-        The `Model` class.
+    The `Model` class.
 
-        This class is used to create AI models and train them on given datasets. 
-        It also provides methods to evaluate and visualize the models.
+    This class is used to create AI models and train them on given datasets. 
+    It also provides methods to evaluate and visualize the models.
     """
 
     def __init__(self, data: Data = Data(), model: ModelName = ModelName.LogisticRegression ) -> None:
@@ -50,7 +49,11 @@ class Model:
         self.confusion_matrix = None
 
     def set_model(self, model: ModelName) -> None:
-        """`set_model` function
+        """
+        `set_model` function
+
+        Description:
+            This function sets the model to be used for training.
 
         Args:
             model (`ModelName`): The name of the model.
@@ -104,7 +107,9 @@ class Model:
             raise ValueError('Invalid model name.')
 
     def set_type(self) -> None:
-        """`set_type` function
+        """
+        `set_type` function
+
         Description:
             This function sets the type of the model according to the model.
         
@@ -145,7 +150,14 @@ class Model:
             raise ValueError('Invalid model name.')
 
     def get_model(self) -> ModelName:
-        """`get_model` function
+        """
+        `get_model` function
+
+        Description:
+            This function returns the model name.
+
+        Args:
+            `None`
 
         Returns:
             `ModelName`: The name of the model.
@@ -153,7 +165,14 @@ class Model:
         return self.model
     
     def get_type(self) -> ModelType:
-        """`get_type` function
+        """
+        `get_type` function
+
+        Description:
+            This function returns the type of the model.
+
+        Args:
+            `None`
 
         Returns:
             `ModelType`: The type of the model.
@@ -161,7 +180,11 @@ class Model:
         return self.type
 
     def set_data(self, data: Data) -> None:
-        """`set_dataset` function
+        """
+        `set_dataset` function
+
+        Description:
+            This function sets the dataset used for training of the model.
 
         Args:
             dataset (`pandas.DataFrame`): The dataset used for training of the model.
@@ -172,7 +195,14 @@ class Model:
         self.data = data
     
     def get_data(self) -> Data:
-        """`get_data` function
+        """
+        `get_data` function
+        
+        Description:
+            This function returns the dataset used for training of the model.
+
+        Args:
+            `None`
 
         Returns:
             `Data`: The dataset used for training of the model.
@@ -209,7 +239,7 @@ class Model:
             The method to train the model.
 
         Args: 
-            `self` (`Model`): The instance of the class `Model`.
+            `None`
         
         Returns:
             `None`

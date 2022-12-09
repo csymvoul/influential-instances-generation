@@ -5,10 +5,9 @@ from src.enums import Datasets
 
 class Data:
     """
-    Description:
-        The `Data` class.
+    The `Data` class.
 
-        This class is used to load the dataset and perform data cleaning and an initial visualization.
+    This class is used to load the dataset and perform data cleaning and an initial visualization.
     """
 
     def __init__(self, dataset_file_name: Datasets = Datasets.BreastCancer) -> None:
@@ -44,7 +43,11 @@ class Data:
         return self.dataset_file_name
 
     def set_dataset(self, dataset_file_name: Datasets) -> None:
-        """`set_dataset` function
+        """
+        `set_dataset` function
+
+        Description:
+            This function sets the dataset to be used for training.
 
         Args:
             dataset_file_name (`Datasets`): The file name of the chosed dataset.
@@ -64,7 +67,7 @@ class Data:
         `get_dataset` function
         
         Description: 
-            This function returns the dataset.
+            This function returns the dataset used for training.
 
         Args:
             `self` (`Data`): The instance of the class `Data`.
@@ -79,7 +82,8 @@ class Data:
         `clean_data` function
 
         Description: 
-            This function performs data cleaning. In particular, it removes null values and duplicates.
+            This function performs data cleaning to the given dataset. 
+            In particular, it removes null values and duplicates.
 
         Args:
             `self` (`Data`): The instance of the class `Data`.
