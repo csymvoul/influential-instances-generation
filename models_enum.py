@@ -10,6 +10,7 @@ class ModelName(Enum):
     LogisticRegression = 'LogisticRegression'
     KNeighborsClassifier = 'KNeighborsClassifier'
     SVC = 'SVC'
+    KMeans = 'KMeans'
     DecisionTreeClassifier = 'DecisionTreeClassifier'
     RandomForestClassifier = 'RandomForestClassifier'
     GradientBoostingClassifier = 'GradientBoostingClassifier'
