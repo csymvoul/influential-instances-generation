@@ -1,4 +1,5 @@
 import pandas as pd
+from model_type import ModelType, ModelName
 from sklearn.model_selection import train_test_split
 
 class Model: 
@@ -10,22 +11,22 @@ class Model:
         It also provides methods to evaluate and visualize the models.
     """
 
-    def __init__(self, model_name: str = 'LogisticRegression', type: str = 'BinaryClassification', dataset: pd.DataFrame = None) -> None:
+    def __init__(self, model_name: ModelName = ModelName.LogisticRegression , type: ModelType = ModelType.BinaryClassification, dataset: pd.DataFrame = None) -> None:
         """ 
         Description:
             The constructor of the class `Model`.
 
         Args: 
-            * model_name (`str`): The name of the model. 
-                * Default value is `LogisticRegression`. 
-                * Other values are `KNeighborsClassifier`, `SVC`, 
-                                    `DecisionTreeClassifier`, `RandomForestClassifier`, 
-                                    `GradientBoostingClassifier`, `XGBClassifier`,  
-                                    `CatBoostClassifier`, `MLPClassifier`, `GaussianNB`, 
-                                    `LinearDiscriminantAnalysis`, `QuadraticDiscriminantAnalysis`.
-            * type (`str`): The type of the model. 
-                * Default value is `BinaryClassification`. 
-                * Other values are `MulticlassClassification`, `Regression`.
+            * model_name (`ModelName`): The name of the model. 
+                * Default value is `ModelName.LogisticRegression`. 
+                * Other values are `ModelName.KNeighborsClassifier`, `ModelName.SVC`, 
+                                    `ModelName.DecisionTreeClassifier`, `ModelName.RandomForestClassifier`, 
+                                    `ModelName.GradientBoostingClassifier`, `ModelName.XGBClassifier`,  
+                                    `ModelName.CatBoostClassifier`, `ModelName.MLPClassifier`, `ModelName.GaussianNB`, 
+                                    `ModelName.LinearDiscriminantAnalysis`, `ModelName.QuadraticDiscriminantAnalysis`.
+            * type (`ModelType`): The type of the model. 
+                * Default value is `ModelType.BinaryClassification`. 
+                * Other values are `ModelType.MulticlassClassification`, `ModelType.Regression`.
             * dataset (`pandas.DataFrame`): The dataset used for training of the model. 
                 * Default value is `None`.
         
@@ -51,11 +52,11 @@ class Model:
         self.roc_auc_score = None
         self.confusion_matrix = None
 
-    def set_model(self, model: str) -> None:
+    def set_model(self, model: ModelName) -> None:
         """`set_model` function
 
         Args:
-            model (`str`): The name of the model.
+            model (`ModelName`): The name of the model.
 
         Raises:
             `ValueError`: If the model name is not valid.
@@ -63,45 +64,57 @@ class Model:
         Returns:
             `None`
         """
-        if model == 'LogisticRegression':
+        if model == ModelName.LogisticRegression.value:
             from sklearn.linear_model import LogisticRegression
             self.model = LogisticRegression()
-        elif model == 'KNeighborsClassifier':
+            self.type = ModelType.BinaryClassification
+        elif model == ModelName.KNeighborsClassifier.value:
             from sklearn.neighbors import KNeighborsClassifier
             self.model = KNeighborsClassifier()
-        elif model == 'SVC':
+            self.type = ModelType.Clustering
+        elif model == ModelName.SVC.value:
             from sklearn.svm import SVC
             self.model = SVC()
-        elif model == 'DecisionTreeClassifier':
+            self.type = ModelType.MulticlassClassification
+        elif model == ModelName.DecisionTreeClassifier.value:
             from sklearn.tree import DecisionTreeClassifier
             self.model = DecisionTreeClassifier()
-        elif model == 'RandomForestClassifier':
+            self.type = ModelType.MulticlassClassification
+        elif model == ModelName.RandomForestClassifier.value:
             from sklearn.ensemble import RandomForestClassifier
             self.model = RandomForestClassifier()
-        elif model == 'GradientBoostingClassifier':
+            self.type = ModelType.MulticlassClassification
+        elif model == ModelName.GradientBoostingClassifier.value:
             from sklearn.ensemble import GradientBoostingClassifier
             self.model = GradientBoostingClassifier()
-        elif model == 'XGBClassifier':
+            self.type = ModelType.MulticlassClassification
+        elif model == ModelName.XGBClassifier.value:
             from xgboost import XGBClassifier
             self.model = XGBClassifier()
-        elif model == 'CatBoostClassifier':
+            self.type = ModelType.MulticlassClassification
+        elif model ==  ModelName.CatBoostClassifier.value:
             from catboost import CatBoostClassifier
             self.model = CatBoostClassifier()
-        elif model == 'MLPClassifier':
+            self.type = ModelType.MulticlassClassification
+        elif model == ModelName.MLPClassifier.value:
             from sklearn.neural_network import MLPClassifier
             self.model = MLPClassifier()
-        elif model == 'GaussianNB':
+            self.type = ModelType.MulticlassClassification
+        elif model == ModelName.GaussianNB.value:
             from sklearn.naive_bayes import GaussianNB
             self.model = GaussianNB()
-        elif model == 'LinearDiscriminantAnalysis':
+            self.type = ModelType.MulticlassClassification
+        elif model == ModelName.LinearDiscriminantAnalysis.value:
             from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
             self.model = LinearDiscriminantAnalysis()
-        elif model == 'QuadraticDiscriminantAnalysis':
+            self.type = ModelType.MulticlassClassification
+        elif model == ModelName.QuadraticDiscriminantAnalysis.value:
             from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
             self.model = QuadraticDiscriminantAnalysis()
+            self.type = ModelType.MulticlassClassification
         else:
             raise ValueError('Invalid model name.')
-    
+  
     def train_test_split(self, test_size: float = 0.2, random_state: int = 42) -> None:
         """ 
         `train_test_split` function
