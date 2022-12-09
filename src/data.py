@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from src.enums import Datasets
 
 class Data:
     """
@@ -10,18 +11,20 @@ class Data:
         This class is used to load the dataset and perform data cleaning and an initial visualization.
     """
 
-    def __init__(self, dataset_file_name: str = 'breast_cancer') -> None:
+    def __init__(self, dataset_file_name: Datasets = Datasets.BreastCancer) -> None:
         """ 
         Description:
             The constructor of the class `Data`.
 
         Args: 
-            path (`str`): The path to the dataset. Default value is the `breast_cancer` dataset.
+            * dataset_file_name (`Datasets`): 
+                * The file name of the chosed dataset. 
+                * Default value is the `Datasets.BreastCancer` dataset.
         
         Returns:
             `None`
         """
-        self.dataset_file_name = dataset_file_name
+        self.dataset_file_name = dataset_file_name.value
         self.path = 'datasets/'+self.dataset_file_name+'.csv'
         self.dataset = pd.read_csv(self.path)
     
@@ -39,6 +42,23 @@ class Data:
             dataset_file_name (`str`): The dataset file name.
         """
         return self.dataset_file_name
+
+    def set_dataset(self, dataset_file_name: Datasets) -> None:
+        """`set_dataset` function
+
+        Args:
+            dataset_file_name (`Datasets`): The file name of the chosed dataset.
+
+        Raises:
+            `ValueError`: If the dataset file name is not valid.
+        
+        Returns:
+            `None`
+        """
+        self.dataset_file_name = dataset_file_name.value
+        self.path = 'datasets/'+self.dataset_file_name+'.csv'
+        self.dataset = pd.read_csv(self.path)
+
 
     def get_dataset(self) -> pd.DataFrame:
         """

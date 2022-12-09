@@ -1,5 +1,5 @@
 import pandas as pd
-from src.models_enum import ModelType, ModelName
+from src.enums import ModelType, ModelName
 from src.data import Data
 from sklearn.model_selection import train_test_split
 

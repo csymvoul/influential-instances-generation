@@ -1,11 +1,21 @@
 from enum import Enum
 
+class Datasets(Enum):
+    """
+    `Datasets` enum class
+
+    Args:
+        Enum (`Enum`): The `Dataset` `Enum` class.
+    """
+    BreastCancer = 'BreastCancer'
+    CervicalCancer = 'CervicalCancer'
+
 class ModelName(Enum):
     """
     `ModelName` enum class
 
     Args:
-        Enum (`Enum`): The `Enum` class.
+        Enum (`Enum`): The `ModelName` `Enum` class.
     """
     LogisticRegression = 'LogisticRegression'
     KNeighborsClassifier = 'KNeighborsClassifier'
@@ -22,10 +32,11 @@ class ModelName(Enum):
     QuadraticDiscriminantAnalysis = 'QuadraticDiscriminantAnalysis'
 
 class ModelType(Enum):
-    """`ModelType` enum class
+    """
+    `ModelType` enum class
 
     Args:
-        Enum (`Enum`): The `Enum` class.
+        Enum (`Enum`): The `ModelType` `Enum` class.
     """
     BinaryClassification = 'BinaryClassification'
     MulticlassClassification = 'MulticlassClassification'
