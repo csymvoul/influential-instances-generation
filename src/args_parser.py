@@ -1,4 +1,5 @@
-import argparse, sys
+import argparse
+
 class ArgsParser:
     def parse_args():
         parser=argparse.ArgumentParser()
