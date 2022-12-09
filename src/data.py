@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from src.enums import Datasets
+from sklearn.model_selection import train_test_split
 
 class Data:
     """
@@ -94,6 +95,24 @@ class Data:
         self.dataset = self.dataset.dropna()
         self.dataset = self.dataset.drop_duplicates()
         print(self.dataset.head())
+    
+    def train_test_split(self, test_size: float = 0.2, random_state: int = 42) -> None:
+        """
+        `train_test_split` function
+
+        Description: 
+            This function splits the dataset into training and testing sets.
+
+        Args:
+            `self` (`Data`): The instance of the class `Data`.
+
+        Returns:
+            `None`
+        """
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, 
+                                                                                self.y, 
+                                                                                test_size = test_size, 
+                                                                                random_state = random_state)
 
     def visualize_data(self) -> None:
         """

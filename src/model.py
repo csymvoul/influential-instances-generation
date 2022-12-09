@@ -1,7 +1,6 @@
 import pandas as pd
 from src.enums import ModelType, ModelName
 from src.data import Data
-from sklearn.model_selection import train_test_split
 
 class Model: 
     """
@@ -226,14 +225,75 @@ class Model:
         Returns:
             `None`
         """
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, 
-                                                                                self.y, 
-                                                                                test_size = test_size, 
-                                                                                random_state = random_state)
+        self.data.train_test_split( self.X, 
+                                    self.y, 
+                                    test_size = test_size, 
+                                    random_state = random_state)
     
-    def train(self) -> None:
+    def get_X_train(self) -> pd.DataFrame:
+        """
+        `get_X_train` function
+
+        Description:
+            This function returns the training set.
+
+        Args:
+            `None`
+
+        Returns:
+            `pandas.DataFrame`: The training set.
+        """
+        return self.X_train
+    
+    def get_X_test(self) -> pd.DataFrame:
+        """
+        `get_X_test` function
+
+        Description:
+            This function returns the testing set.
+
+        Args:
+            `None`
+
+        Returns:
+            `pandas.DataFrame`: The testing set.
+        """
+        return self.X_test
+    
+    def get_y_train(self) -> pd.DataFrame:
+        """
+        `get_y_train` function
+
+        Description:
+            This function returns the training set.
+
+        Args:
+            `None`
+
+        Returns:
+            `pandas.DataFrame`: The training set.
+        """
+        return self.y_train
+    
+    def get_y_test(self) -> pd.DataFrame:
+        """
+        `get_y_test` function
+
+        Description:
+            This function returns the testing set.
+
+        Args:
+            `None`
+
+        Returns:
+            `pandas.DataFrame`: The testing set.
+        """
+        return self.y_test
+    
+
+    def fit(self) -> None:
         """ 
-        `train` function
+        `fit` function
 
         Description:
             The method to train the model.
