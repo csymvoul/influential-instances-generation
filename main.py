@@ -23,9 +23,10 @@ except:
     except:
         warnings.warn('No model type specified. Using the default model (LogisticRegression)', category=DeprecationWarning)
         model = Model()
-    
-print(model.get_model().value)
-print(model.get_type().value)
-print(model.get_data().get_dataset_file_name())
+
+print()
+print("Model:\t\t{0}".format(model.get_model().value))
+print("Model type:\t{0}".format(model.get_type().value))
+print("Dataset:\t{0}".format(model.get_data().get_dataset_file_name().value))
 model.get_data().set_dataset(dataset_file_name=Datasets.CervicalCancer)
-print("Now the dataset is: ", model.get_data().get_dataset_file_name())
+print("Dataset now:\t{0}\n".format(model.get_data().get_dataset_file_name().value))

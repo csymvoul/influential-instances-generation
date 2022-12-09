@@ -55,8 +55,8 @@ class Data:
         Returns:
             `None`
         """
-        self.dataset_file_name = dataset_file_name.value
-        self.path = 'datasets/'+self.dataset_file_name+'.csv'
+        self.dataset_file_name = dataset_file_name
+        self.path = 'datasets/'+self.dataset_file_name.value+'.csv'
         self.dataset = pd.read_csv(self.path)
 
     def get_dataset(self) -> pd.DataFrame:
