@@ -1,13 +1,14 @@
 import sys
 import warnings
-from data import Data
-from models_enum import ModelType, ModelName
-from model import Model
+from src.data import Data
+from src.models_enum import ModelType, ModelName
+from src.model import Model
 
 print('Number of arguments: {}'.format(len(sys.argv)))
 model = Model(model=ModelName.KMeans)
 print(model.get_model().value)
-print(model.type)
+model.set_type()
+print(model.get_type().value)
 
 # print('Number of arguments: {}'.format(len(sys.argv)))
 # try: 
