@@ -3,15 +3,9 @@ import warnings
 from src.data import Data
 from src.enums import ModelType, ModelName, Datasets
 from src.model import Model
+from src.args_parser import ArgsParser
 
-import argparse, sys
-
-parser=argparse.ArgumentParser()
-
-parser.add_argument("--data", help="The dataset used for training of the model.")
-parser.add_argument("--model", help="The model which will be used for training.")
-
-args=parser.parse_args()
+args = ArgsParser.parse_args()
 
 try: 
     dataset_file_name = Datasets(args.data)
