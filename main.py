@@ -1,7 +1,6 @@
-import sys
 import warnings
 from src.data import Data
-from src.enums import ModelType, ModelName, Datasets
+from src.enums import ModelName, Datasets
 from src.model import Model
 from src.args_parser import ArgsParser
 
