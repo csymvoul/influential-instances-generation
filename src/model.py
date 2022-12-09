@@ -32,12 +32,6 @@ class Model:
         self.model = model
         self.set_type()
         self.data = data
-        self.X_train = None
-        self.X_test = None
-        self.y_train = None
-        self.y_test = None
-        self.X = None
-        self.y = None
         self.y_pred = None
         self.y_pred_proba = None
         self.accuracy = None
@@ -225,72 +219,9 @@ class Model:
         Returns:
             `None`
         """
-        self.data.train_test_split( self.X, 
-                                    self.y, 
-                                    test_size = test_size, 
+        self.data.train_test_split( test_size = test_size, 
                                     random_state = random_state)
-    
-    def get_X_train(self) -> pd.DataFrame:
-        """
-        `get_X_train` function
-
-        Description:
-            This function returns the training set.
-
-        Args:
-            `None`
-
-        Returns:
-            `pandas.DataFrame`: The training set.
-        """
-        return self.X_train
-    
-    def get_X_test(self) -> pd.DataFrame:
-        """
-        `get_X_test` function
-
-        Description:
-            This function returns the testing set.
-
-        Args:
-            `None`
-
-        Returns:
-            `pandas.DataFrame`: The testing set.
-        """
-        return self.X_test
-    
-    def get_y_train(self) -> pd.DataFrame:
-        """
-        `get_y_train` function
-
-        Description:
-            This function returns the training set.
-
-        Args:
-            `None`
-
-        Returns:
-            `pandas.DataFrame`: The training set.
-        """
-        return self.y_train
-    
-    def get_y_test(self) -> pd.DataFrame:
-        """
-        `get_y_test` function
-
-        Description:
-            This function returns the testing set.
-
-        Args:
-            `None`
-
-        Returns:
-            `pandas.DataFrame`: The testing set.
-        """
-        return self.y_test
-    
-
+        
     def fit(self) -> None:
         """ 
         `fit` function

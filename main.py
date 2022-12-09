@@ -35,5 +35,6 @@ print()
 print("Model:\t\t{0}".format(model.get_model().value))
 print("Model type:\t{0}".format(model.get_type().value))
 print("Dataset:\t{0}".format(model.get_data().get_dataset_file_name().value))
-model.get_data().set_dataset(dataset_file_name=Datasets.CervicalCancer)
-print("Dataset now:\t{0}\n".format(model.get_data().get_dataset_file_name().value))
+
+model.train_test_split()
+print("X_train:\t{0}".format(model.get_data().X_train.shape))
