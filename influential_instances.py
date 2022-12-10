@@ -1,5 +1,6 @@
 from src.data import Data
 from src.enums import Datasets
+from sklearn.metrics import mean_squared_error, r2_score
 
 class InfluentialInstance(Data): 
     """
@@ -16,6 +17,7 @@ class InfluentialInstance(Data):
         self.dfbeta = None
         self.rmse = None
         self.r2 = None
+        self.weights = None
     
     def calculate_dfbeta(self) -> None:
         """
@@ -107,5 +109,4 @@ class InfluentialInstance(Data):
         """
         return self.r2
 
-    
     
