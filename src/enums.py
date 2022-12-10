@@ -30,6 +30,7 @@ class ModelName(Enum):
     GaussianNB = 'GaussianNB'
     LinearDiscriminantAnalysis = 'LinearDiscriminantAnalysis'
     QuadraticDiscriminantAnalysis = 'QuadraticDiscriminantAnalysis'
+    LinearRegression = 'LinearRegression'
 
 class ModelType(Enum):
     """
