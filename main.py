@@ -1,32 +1,49 @@
-import sys
 import warnings
 from src.data import Data
-from src.enums import ModelType, ModelName, Datasets
+from src.enums import ModelName, Datasets
 from src.model import Model
 from src.args_parser import ArgsParser
 
-args = ArgsParser.parse_args()
+args = ArgsParser().parse_args()
 
-try: 
+print("Arguments:")
+print("data:\t{0}".format(args.data))
+print("model:\t{0}".format(args.model))
+
+try:
+    # Dataset specified 
     dataset_file_name = Datasets(args.data)
     data = Data(dataset_file_name=dataset_file_name)
     try: 
+        # Model specified
         model_name = ModelName(args.model)
-        model = Model(model=model_name, data=data)
+        model = Model(model_name=model_name, data=data)
     except:
-        warnings.warn('No model specified. Using the default model (LogisticRegression)')
+        # Model not specified
+        warnings.warn('Model not specified. Using the default model (LogisticRegression)')
         model = Model(data=data)
 except:
-    warnings.warn('No dataset specified. Using the default dataset (breast_cancer)')
+    pass
+    # Dataset not specified
+    warnings.warn('Dataset not specified. Using the default dataset (breast_cancer)')
     try: 
+        # Model specified
         model_name = ModelName(args.model)
-        model = Model(model=model_name)
+        model = Model(model_name=model_name)
     except:
-        warnings.warn('No model type specified. Using the default model (LogisticRegression)', category=DeprecationWarning)
+        # Model not specified
+        warnings.warn('Model type not specified. Using the default model (LogisticRegression)', category=DeprecationWarning)
         model = Model()
-    
-print(model.get_model().value)
-print(model.get_type().value)
-print(model.get_data().get_dataset_file_name())
-model.get_data().set_dataset(dataset_file_name=Datasets.CervicalCancer)
-print("Now the dataset is: ", model.get_data().get_dataset_file_name())
+
+print()
+print("Model type:\t{0}".format(model.get_type().value))
+print("Model name:\t{0}".format(model.get_model_name().value))
+print("Model:\t\t{0}".format(type(model.get_model())))
+
+print("Dataset:\t{0}".format(model.get_data().get_dataset_file_name().value))
+
+model.train_test_split()
+print("X_train:\t{0}".format(model.get_data().X_train.shape))
+print("X_test:\t\t{0}".format(model.get_data().X_test.shape))
+print("y_train:\t{0}".format(model.get_data().y_train.shape))
+print("y_test:\t\t{0}".format(model.get_data().y_test.shape))

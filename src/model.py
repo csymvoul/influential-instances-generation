@@ -1,18 +1,17 @@
 import pandas as pd
 from src.enums import ModelType, ModelName
 from src.data import Data
-from sklearn.model_selection import train_test_split
+
 
 class Model: 
     """
-    Description:
-        The `Model` class.
+    The `Model` class.
 
-        This class is used to create AI models and train them on given datasets. 
-        It also provides methods to evaluate and visualize the models.
+    This class is used to create AI models and train them on given datasets. 
+    It also provides methods to evaluate and visualize the models.
     """
 
-    def __init__(self, data: Data = Data(), model: ModelName = ModelName.LogisticRegression ) -> None:
+    def __init__(self, data: Data = Data(), model_name: ModelName = ModelName.LogisticRegression) -> None:
         """ 
         Description:
             The constructor of the class `Model`.
@@ -31,15 +30,11 @@ class Model:
         Returns:
             `None`
         """
-        self.model = model
+        self.model_name = model_name
+        self.model = None
+        self.set_model(model_name)
         self.set_type()
         self.data = data
-        self.X_train = None
-        self.X_test = None
-        self.y_train = None
-        self.y_test = None
-        self.X = None
-        self.y = None
         self.y_pred = None
         self.y_pred_proba = None
         self.accuracy = None
@@ -49,8 +44,12 @@ class Model:
         self.roc_auc_score = None
         self.confusion_matrix = None
 
-    def set_model(self, model: ModelName) -> None:
-        """`set_model` function
+    def set_model(self, model_name: ModelName) -> None:
+        """
+        `set_model` function
+
+        Description:
+            This function sets the model to be used for training.
 
         Args:
             model (`ModelName`): The name of the model.
@@ -61,50 +60,69 @@ class Model:
         Returns:
             `None`
         """
-        if model == ModelName.LogisticRegression.value:
+        if model_name == ModelName.LogisticRegression:
             from sklearn.linear_model import LogisticRegression
+            self.model_name = ModelName.LogisticRegression
             self.model = LogisticRegression()
-        elif model == ModelName.KNeighborsClassifier.value:
+        elif model_name == ModelName.KNeighborsClassifier:
             from sklearn.neighbors import KNeighborsClassifier
+            self.model_name = ModelName.KNeighborsClassifier
             self.model = KNeighborsClassifier()
-        elif model == ModelName.KMeans.value:
+        elif model_name == ModelName.KMeans:
             from sklearn.cluster import KMeans
+            self.model_name = ModelName.KMeans
             self.model = KMeans()
-        elif model == ModelName.SVC.value:
+        elif model_name == ModelName.SVC:
             from sklearn.svm import SVC
+            self.model_name = ModelName.SVC
             self.model = SVC()
-        elif model == ModelName.DecisionTreeClassifier.value:
+        elif model_name == ModelName.DecisionTreeClassifier:
             from sklearn.tree import DecisionTreeClassifier
+            self.model_name = ModelName.DecisionTreeClassifier
             self.model = DecisionTreeClassifier()
-        elif model == ModelName.RandomForestClassifier.value:
+        elif model_name == ModelName.RandomForestClassifier:
             from sklearn.ensemble import RandomForestClassifier
+            self.model_name = ModelName.RandomForestClassifier
             self.model = RandomForestClassifier()
-        elif model == ModelName.GradientBoostingClassifier.value:
+        elif model_name == ModelName.GradientBoostingClassifier:
             from sklearn.ensemble import GradientBoostingClassifier
+            self.model_name = ModelName.GradientBoostingClassifier
             self.model = GradientBoostingClassifier()
-        elif model == ModelName.XGBClassifier.value:
+        elif model_name == ModelName.XGBClassifier:
             from xgboost import XGBClassifier
+            self.model_name = ModelName.XGBClassifier
             self.model = XGBClassifier()
-        elif model ==  ModelName.CatBoostClassifier.value:
+        elif model_name ==  ModelName.CatBoostClassifier:
             from catboost import CatBoostClassifier
+            self.model_name = ModelName.CatBoostClassifier
             self.model = CatBoostClassifier()
-        elif model == ModelName.MLPClassifier.value:
+        elif model_name == ModelName.MLPClassifier:
             from sklearn.neural_network import MLPClassifier
+            self.model_name = ModelName.MLPClassifier
             self.model = MLPClassifier()
-        elif model == ModelName.GaussianNB.value:
+        elif model_name == ModelName.GaussianNB:
             from sklearn.naive_bayes import GaussianNB
+            self.model_name = ModelName.GaussianNB
             self.model = GaussianNB()
-        elif model == ModelName.LinearDiscriminantAnalysis.value:
+        elif model_name == ModelName.LinearDiscriminantAnalysis:
             from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+            self.model_name = ModelName.LinearDiscriminantAnalysis
             self.model = LinearDiscriminantAnalysis()
-        elif model == ModelName.QuadraticDiscriminantAnalysis.value:
+        elif model_name == ModelName.QuadraticDiscriminantAnalysis:
             from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+            self.model_name = ModelName.QuadraticDiscriminantAnalysis
             self.model = QuadraticDiscriminantAnalysis()
+        elif model_name == ModelName.LinearRegression:
+            from sklearn.linear_model import LinearRegression
+            self.model_name = ModelName.LinearRegression
+            self.model = LinearRegression()
         else:
             raise ValueError('Invalid model name.')
 
     def set_type(self) -> None:
-        """`set_type` function
+        """
+        `set_type` function
+
         Description:
             This function sets the type of the model according to the model.
         
@@ -114,46 +132,76 @@ class Model:
         Returns:
             `None`
         """
-
-        if self.model.value == ModelName.LogisticRegression.value:
+        if self.model_name == ModelName.LogisticRegression:
             self.type = ModelType.BinaryClassification
-        elif self.model.value == ModelName.KMeans.value:
+        elif self.model_name == ModelName.KMeans:
             self.type = ModelType.Clustering
-        elif self.model.value == ModelName.KNeighborsClassifier.value:
-            self.type = ModelType.Clustering
-        elif self.model.value == ModelName.SVC.value:
+        elif self.model_name == ModelName.LinearRegression:
+            self.type = ModelType.Regression
+        elif self.model_name == ModelName.KNeighborsClassifier:
             self.type = ModelType.MulticlassClassification
-        elif self.model.value == ModelName.DecisionTreeClassifier.value:
+        elif self.model_name == ModelName.SVC:
             self.type = ModelType.MulticlassClassification
-        elif self.model.value == ModelName.RandomForestClassifier.value:
+        elif self.model_name == ModelName.DecisionTreeClassifier:
             self.type = ModelType.MulticlassClassification
-        elif self.model.value == ModelName.GradientBoostingClassifier.value:
+        elif self.model_name == ModelName.RandomForestClassifier:
             self.type = ModelType.MulticlassClassification
-        elif self.model.value == ModelName.XGBClassifier.value:
+        elif self.model_name == ModelName.GradientBoostingClassifier:
             self.type = ModelType.MulticlassClassification
-        elif self.model.value ==  ModelName.CatBoostClassifier.value:
+        elif self.model_name == ModelName.XGBClassifier:
             self.type = ModelType.MulticlassClassification
-        elif self.model.value == ModelName.MLPClassifier.value:
+        elif self.model_name ==  ModelName.CatBoostClassifier:
             self.type = ModelType.MulticlassClassification
-        elif self.model.value == ModelName.GaussianNB.value:
+        elif self.model_name == ModelName.MLPClassifier:
             self.type = ModelType.MulticlassClassification
-        elif self.model.value == ModelName.LinearDiscriminantAnalysis.value:
+        elif self.model_name == ModelName.GaussianNB:
             self.type = ModelType.MulticlassClassification
-        elif self.model.value == ModelName.QuadraticDiscriminantAnalysis.value:
+        elif self.model_name == ModelName.LinearDiscriminantAnalysis:
+            self.type = ModelType.MulticlassClassification
+        elif self.model_name == ModelName.QuadraticDiscriminantAnalysis:
             self.type = ModelType.MulticlassClassification
         else:
             raise ValueError('Invalid model name.')
 
-    def get_model(self) -> ModelName:
-        """`get_model` function
+    def get_model_name(self) -> ModelName:
+        """
+        `get_model` function
+
+        Description:
+            This function returns the model name.
+
+        Args:
+            `None`
 
         Returns:
             `ModelName`: The name of the model.
         """
+        return self.model_name
+    
+    def get_model(self):
+        """
+        `get_model` function
+
+        Description:
+            This function returns the model.
+
+        Args:
+            `None`
+
+        Returns:
+            `Model`: The model.
+        """
         return self.model
     
     def get_type(self) -> ModelType:
-        """`get_type` function
+        """
+        `get_type` function
+
+        Description:
+            This function returns the type of the model.
+
+        Args:
+            `None`
 
         Returns:
             `ModelType`: The type of the model.
@@ -161,7 +209,11 @@ class Model:
         return self.type
 
     def set_data(self, data: Data) -> None:
-        """`set_dataset` function
+        """
+        `set_dataset` function
+
+        Description:
+            This function sets the dataset used for training of the model.
 
         Args:
             dataset (`pandas.DataFrame`): The dataset used for training of the model.
@@ -172,7 +224,14 @@ class Model:
         self.data = data
     
     def get_data(self) -> Data:
-        """`get_data` function
+        """
+        `get_data` function
+        
+        Description:
+            This function returns the dataset used for training of the model.
+
+        Args:
+            `None`
 
         Returns:
             `Data`: The dataset used for training of the model.
@@ -196,22 +255,45 @@ class Model:
         Returns:
             `None`
         """
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, 
-                                                                                self.y, 
-                                                                                test_size = test_size, 
-                                                                                random_state = random_state)
-    
-    def train(self) -> None:
+        self.data.train_test_split( test_size = test_size, 
+                                    random_state = random_state)
+        
+    def fit(self) -> None:
         """ 
-        `train` function
+        `fit` function
 
         Description:
             The method to train the model.
 
         Args: 
-            `self` (`Model`): The instance of the class `Model`.
+            `None`
         
         Returns:
             `None`
         """
-        self.model.fit(self.X_train, self.y_train)
+        if self.model_name == ModelName.LogisticRegression:
+            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+        elif self.model_name == ModelName.KMeans:
+            self.model.fit(self.data.get_X_train())
+        elif self.model_name == ModelName.KNeighborsClassifier:
+            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+        elif self.model_name == ModelName.SVC:
+            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+        elif self.model_name == ModelName.DecisionTreeClassifier:
+            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+        elif self.model_name == ModelName.RandomForestClassifier:
+            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+        elif self.model_name == ModelName.GradientBoostingClassifier:
+            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+        elif self.model_name == ModelName.XGBClassifier:
+            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+        elif self.model_name == ModelName.CatBoostClassifier:
+            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+        elif self.model_name == ModelName.MLPClassifier:
+            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+        elif self.model_name == ModelName.GaussianNB:
+            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+        elif self.model_name == ModelName.LinearDiscriminantAnalysis:
+            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+        elif self.model_name == ModelName.QuadraticDiscriminantAnalysis:
+            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
