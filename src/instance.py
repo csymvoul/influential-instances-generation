@@ -1,3 +1,5 @@
+from sklearn.metrics import mean_squared_error, r2_score
+
 class Instance():
     """
     The `Instance` class
@@ -5,7 +7,7 @@ class Instance():
     Description:
         This class is used to create an instance of the `Instance` class.
     """
-    
+
     def __init__(self):
         """ 
         Description:
@@ -30,7 +32,7 @@ class Instance():
             This function calculates the dfbeta value for each instance in the dataset.
 
         Args:
-            `self` (`InfluentialInstance`): The instance of the class `InfluentialInstance`.
+            `self` (`Instance`): The instance of the class `Instance`.
 
         Returns:
             `None`
@@ -45,7 +47,7 @@ class Instance():
             This function calculates the rmse value for each instance in the dataset.
 
         Args:
-            `self` (`InfluentialInstance`): The instance of the class `InfluentialInstance`.
+            `self` (`Instance`): The instance of the class `Instance`.
 
         Returns:
             `None`
@@ -60,7 +62,7 @@ class Instance():
             This function calculates the r2 value for each instance in the dataset.
 
         Args:
-            `self` (`InfluentialInstance`): The instance of the class `InfluentialInstance`.
+            `self` (`Instance`): The instance of the class `Instance`.
 
         Returns:
             `None`
@@ -75,7 +77,7 @@ class Instance():
             This function returns the dfbeta value for each instance in the dataset.
 
         Args:
-            `self` (`InfluentialInstance`): The instance of the class `InfluentialInstance`.
+            `self` (`Instance`): The instance of the class `Instance`.
 
         Returns:
             dfbeta (`float`): The dfbeta value for each instance in the dataset.
@@ -90,7 +92,7 @@ class Instance():
             This function returns the rmse value for each instance in the dataset.
 
         Args:
-            `self` (`InfluentialInstance`): The instance of the class `InfluentialInstance`.
+            `self` (`Instance`): The instance of the class `Instance`.
 
         Returns:
             rmse (`float`): The rmse value for each instance in the dataset.
@@ -105,12 +107,26 @@ class Instance():
             This function returns the r2 value for each instance in the dataset.
 
         Args:
-            `self` (`InfluentialInstance`): The instance of the class `InfluentialInstance`.
+            `self` (`Instance`): The instance of the class `Instance`.
 
         Returns:
             r2 (`float`): The r2 value for each instance in the dataset.
         """
         return self.r2
 
+    def get_weights(self) -> float:
+        """
+        `get_weights` function
+
+        Description:
+            This function returns the weights value for each instance in the dataset.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+
+        Returns:
+            weights (`float`): The weights value for each instance in the dataset.
+        """
+        return self.weights
 
     

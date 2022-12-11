@@ -1,7 +1,5 @@
 from src.data import Data
 from src.instance import Instance
-from src.enums import Datasets
-from sklearn.metrics import mean_squared_error, r2_score
 
 class InfluentialInstance(Instance): 
     """
