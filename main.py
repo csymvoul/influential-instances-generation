@@ -42,8 +42,6 @@ print("Model:\t\t{0}".format(type(model.get_model())))
 
 print("Dataset:\t{0}".format(model.get_data().get_dataset_file_name().value))
 
-model.train_test_split()
-print("X_train:\t{0}".format(model.get_data().X_train.shape))
-print("X_test:\t\t{0}".format(model.get_data().X_test.shape))
-print("y_train:\t{0}".format(model.get_data().y_train.shape))
-print("y_test:\t\t{0}".format(model.get_data().y_test.shape))
+model.get_data().set_instances()
+data = model.get_data()
+print("First instance: \n {0}".format(data.get_instance(0).get_instance_data()))

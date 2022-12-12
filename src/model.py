@@ -34,6 +34,7 @@ class Model:
         self.model = None
         self.set_model(model_name)
         self.set_type()
+        self.params = None
         self.data = data
         self.y_pred = None
         self.y_pred_proba = None
@@ -119,6 +120,22 @@ class Model:
         else:
             raise ValueError('Invalid model name.')
 
+    def set_params(self, params: dict) -> None:
+        """
+        `set_params` function
+
+        Description:
+            This function sets the parameters of the model.
+
+        Args:
+            params (`dict`): The parameters of the model.
+        
+        Returns:
+            `None`
+        """
+        self.params = params
+        self.model.set_params(**params)
+
     def set_type(self) -> None:
         """
         `set_type` function
@@ -189,7 +206,9 @@ class Model:
             `None`
 
         Returns:
-            `Model`: The model.
+            `(LogisticRegression | KNeighborsClassifier | KMeans | SVC | DecisionTreeClassifier | RandomForestClassifier 
+            | GradientBoostingClassifier | XGBClassifier | CatBoostClassifier | MLPClassifier | GaussianNB 
+            | LinearDiscriminantAnalysis | QuadraticDiscriminantAnalysis | LinearRegression | None)`: The model or `None` if the model is not set.
         """
         return self.model
     
@@ -297,3 +316,44 @@ class Model:
             self.model.fit(self.data.get_X_train(), self.data.get_y_train())
         elif self.model_name == ModelName.QuadraticDiscriminantAnalysis:
             self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+
+    def get_weights(self):
+        """
+        `get_weights` function
+
+        Description:
+            This function returns the weights, means or the coefficients of the model.
+        
+        Args:
+            `None`
+        
+        Returns:
+            `(Any | NDArray | ndarray | NDArray[floating[_64Bit]] | Booster | list | None)`: The weights, means or the coefficients of the model or `None` if the model is not supported.
+        """
+        if self.model_name == ModelName.LogisticRegression:
+            return self.model.coef_
+        elif self.model_name == ModelName.KMeans:
+            return self.model.means_ 
+        elif self.model_name == ModelName.KNeighborsClassifier:
+            return self.model.means_
+        elif self.model_name == ModelName.SVC:
+            return self.model.support_vectors_
+        elif self.model_name == ModelName.DecisionTreeClassifier:
+            return self.model.tree_
+        elif self.model_name == ModelName.RandomForestClassifier:
+            return self.model.estimators_
+        elif self.model_name == ModelName.GradientBoostingClassifier:
+            return self.model.estimators_
+        elif self.model_name == ModelName.XGBClassifier:
+            return self.model.get_booster()
+        elif self.model_name == ModelName.CatBoostClassifier:
+            return self.model.get_all_params()
+        elif self.model_name == ModelName.MLPClassifier:
+            return self.model.coefs_
+        elif self.model_name == ModelName.GaussianNB:
+            return self.model.theta_
+        elif self.model_name == ModelName.LinearDiscriminantAnalysis:
+            return self.model.coef_
+        elif self.model_name == ModelName.QuadraticDiscriminantAnalysis:
+            return self.model.theta_
+        

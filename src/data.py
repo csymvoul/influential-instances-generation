@@ -1,8 +1,12 @@
+from math import sqrt
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.metrics import mean_squared_error, r2_score
 from src.enums import Datasets
 from sklearn.model_selection import train_test_split
+from src.instance import Instance
+from src.influential_instance import InfluentialInstance
 
 class Data:
     """
@@ -33,6 +37,14 @@ class Data:
         self.X_train = None
         self.y_test = None
         self.y_train = None
+        self.instances = None
+        self.influential_instances = []
+        self.dataset_beta = None
+        self.dataset_rmse = None
+        self.dataset_r2 = None
+        self.threshold_dfbeta = None
+        self.threshold_rmse = None
+        self.threshold_r2 = None
     
     def get_dataset_file_name(self) -> Datasets:
         """
@@ -233,6 +245,130 @@ class Data:
         """
         return self.y_test
 
+    def set_instances(self) -> None:
+        """
+        `set_instances` function
+
+        Description:
+            This function sets an Instance object for each instance of the dataset to a list.
+
+        Args:
+            `None`
+
+        Returns:
+            `None`
+        """
+        self.instances = []
+        for i in range(len(self.dataset)):
+            self.instances.append(Instance(instance_data=self.dataset.iloc[i]))
+        count = 0
+
+    def get_instances(self) -> list[Instance]:
+        """
+        `get_instances` function
+
+        Description:
+            This function returns the list of instances. Each instance is an Instance object.
+
+        Args:
+            `None`
+
+        Returns:
+            `list[Instance]`: The list of instances.
+        """
+        return self.instances
+    
+    def get_instance(self, index: int) -> Instance:
+        """
+        `get_instance` function
+
+        Description:
+            This function returns an instance. The instance is an Instance object.
+
+        Args:
+            `index` (`int`): The index of the instance.
+
+        Returns:
+            `Instance`: The instance.
+        """
+        return self.instances[index]
+
+    def set_instance_as_influential(self, index: int) -> None:
+        """
+        `set_instance_as_influential` function
+
+        Description:
+            This function sets an instance as influential.
+
+        Args:
+            `index` (`int`): The index of the instance.
+
+        Returns:
+            `None`
+        """
+        influential_instance = InfluentialInstance(instance=self.instances[index])
+        self.influential_instances.append(influential_instance)
+
+    def calculate_dataset_rmse(self) -> None:
+        """
+        `calculate_dataset_rmse` function
+
+        Description:
+            This function calculates the RMSE of the dataset.
+
+        Args:
+            `None`
+
+        Returns:
+            `None`
+        """
+        self.dataset_rmse = sqrt(mean_squared_error(self.y, self.dataset['prediction']))
+    
+    def get_dataset_rmse(self) -> float:
+        """
+        `get_dataset_rmse` function
+
+        Description:
+            This function returns the RMSE of the dataset.
+
+        Args:
+            `None`
+
+        Returns:
+            `float`: The RMSE of the dataset.
+        """
+        return self.dataset_rmse
+    
+    def calculate_dataset_r2(self) -> None: 
+        """
+        `calculate_dataset_r2` function
+
+        Description:
+            This function calculates the R2 of the dataset.
+
+        Args:
+            `None`
+
+        Returns:
+            `None`
+        """
+        self.dataset_r2 = r2_score(self.y, self.dataset['prediction'])
+
+    def calculate_dataset_beta(self) -> None:
+        """
+        `calculate_dataset_beta` function
+
+        Description:
+            This function calculates the beta of the dataset.
+
+        Args:
+            `None`
+
+        Returns:
+            `None`
+        """
+        self.dataset_beta = self.dataset['prediction'].corr(self.y)
+    
     def visualize_data(self) -> None:
         """
         `visualize_data` function
