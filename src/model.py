@@ -2,7 +2,7 @@ import pandas as pd
 from src.enums import ModelType, ModelName
 from src.data import Data
 import numpy as np
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import fbeta_score, mean_squared_error, r2_score
 
 class Model: 
     """
@@ -37,8 +37,11 @@ class Model:
         self.set_type()
         self.params = None
         self.data = data
+        self.data.clean_data()
         self.y_pred = None
         self.y_pred_proba = None
+        self.beta = None
+        self.dfbeta = None
         self.rmse = None
         self.accuracy = None
         self.precision = None
@@ -365,7 +368,7 @@ class Model:
         `calculate_beta` function
 
         Description:
-            This function calculates the beta score.
+            This function calculates the beta score of the model.
 
         Args:
             `None`
@@ -373,8 +376,27 @@ class Model:
         Returns:
             `None`
         """
+        if self.predictions is None:
+            raise ValueError("The model has not made any predictions yet. Please use the `predict()` function first.")
+        print(self.predictions)
+        
+        self.beta = fbeta_score(self.data.get_y_test(), self.predictions, beta = 1)
+        self.data.set_dataset_beta(self.beta)
 
+    def get_beta(self) -> float:
+        """
+        `get_beta` function
 
+        Description:
+            This function returns the beta score.
+
+        Args:
+            `None`
+
+        Returns:
+            `float`: The beta score.
+        """
+        return self.beta
 
     def predict(self, input) -> None:
         """
@@ -390,6 +412,7 @@ class Model:
             `None`
         """
         self.predictions = self.model.predict(input)
+        self.data.set_y_pred(self.predictions)
 
     def get_prediction(self) -> (pd.Series | np.ndarray | pd.DataFrame | None):
         """

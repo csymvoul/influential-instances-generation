@@ -31,12 +31,14 @@ class Data:
         self.dataset_file_name = dataset_file_name
         self.path = 'datasets/'+self.dataset_file_name.value+'.csv'
         self.dataset = pd.read_csv(self.path)
+        self.clean_data()
         self.X = None
         self.y = None
         self.X_test = None
         self.X_train = None
         self.y_test = None
         self.y_train = None
+        self.y_pred = None
         self.instances = None
         self.set_instances()
         self.train_test_split()
@@ -115,8 +117,30 @@ class Data:
         """
         self.dataset = self.dataset.dropna()
         self.dataset = self.dataset.drop_duplicates()
-        print(self.dataset.head())
+
+        if self.dataset_file_name == Datasets.BreastCancer:
+            self.dataset['diagnosis'] = self.dataset['diagnosis'].map({'M': 1, 'B': 0}).replace({'M': 1, 'B': 0})
+        elif self.dataset_file_name == Datasets.CervicalCancer:
+            self.dataset['Dx:Cancer'] = self.dataset['Dx:Cancer'].map({'Yes': 1, 'No': 0}).replace({'Yes': 1, 'No': 0})
+            self.dataset.drop(['STDs: Time since first diagnosis', 'STDs: Time since last diagnosis'], axis=1, inplace=True)   
+        
+        self.normalize_data()
     
+    def normalize_data(self) -> None:
+        """
+        `normalize_data` function
+
+        Description: 
+            This function normalizes the dataset.
+
+        Args:
+            `self` (`Data`): The instance of the class `Data`.
+
+        Returns:
+            `None`
+        """
+        self.dataset = (self.dataset - self.dataset.mean()) / self.dataset.std()
+
     def split_dataset(self) -> None:
         """
         `split_dataset` function
@@ -131,11 +155,11 @@ class Data:
             `None`
         """
         if self.dataset_file_name == Datasets.BreastCancer:
-            self.dataset['diagnosis'] = self.dataset['diagnosis'].map({'M': 1, 'B': 0})
+            self.clean_data()
             self.X = self.dataset.drop('diagnosis', axis=1)
             self.y = self.dataset['diagnosis']
         elif self.dataset_file_name == Datasets.CervicalCancer:
-            self.dataset['Dx:Cancer'] = self.dataset['Dx:Cancer'].map({'Yes': 1, 'No': 0})
+            self.clean_data()
             self.X = self.dataset.drop('Dx:Cancer', axis=1)
             self.y = self.dataset['Dx:Cancer']
 
@@ -249,6 +273,36 @@ class Data:
         """
         return self.y_test
 
+    def set_y_pred(self, y_pred: pd.DataFrame) -> None:
+        """
+        `set_y_pred` function
+
+        Description:
+            This function sets the predicted labels.
+
+        Args:
+            `y_pred` (`pandas.DataFrame`): The predicted labels.
+
+        Returns:
+            `None`
+        """
+        self.y_pred = y_pred
+    
+    def get_y_pred(self) -> pd.DataFrame:
+        """
+        `get_y_pred` function
+
+        Description:
+            This function returns the predicted labels.
+
+        Args:
+            `None`
+
+        Returns:
+            `pandas.DataFrame`: The predicted labels.
+        """
+        return self.y_pred
+
     def set_instances(self) -> None:
         """
         `set_instances` function
@@ -320,7 +374,7 @@ class Data:
             This function set the RMSE of the dataset.
 
         Args:
-            `None`
+            `dataset_rmse` (`float`): The RMSE of the dataset.
 
         Returns:
             `None`
@@ -342,36 +396,66 @@ class Data:
         """
         return self.dataset_rmse
     
-    def calculate_dataset_r2(self) -> None: 
+    def set_dataset_r2(self, dataset_r2:float) -> None: 
         """
-        `calculate_dataset_r2` function
+        `set_dataset_r2` function
 
         Description:
-            This function calculates the R2 of the dataset.
+            This function sets the R2 of the dataset calculated when trained with all instances.
 
         Args:
-            `None`
+            `dataset_r2` (`float`): The R2 Score of the dataset calculated when trained with all instances.
 
         Returns:
             `None`
         """
-        self.dataset_r2 = r2_score(self.y, self.dataset['prediction'])
+        self.dataset_r2 = dataset_r2
 
-    def calculate_dataset_beta(self) -> None:
+    def set_dataset_beta(self, dataset_beta:float) -> None:
         """
-        `calculate_dataset_beta` function
+        `set_dataset_beta` function
 
         Description:
-            This function calculates the beta of the dataset.
+            This function sets the beta of the dataset calculated when trained with all instances.
 
         Args:
-            `None`
+            `dataset_beta` (`float`): The beta of the dataset calculated when trained with all instances.
 
         Returns:
             `None`
         """
-        self.dataset_beta = self.dataset['prediction'].corr(self.y)
+        self.dataset_beta = dataset_beta
     
+    def get_dataset_r2(self) -> float:
+        """
+        `get_dataset_r2` function
+
+        Description:
+            This function returns the R2 of the dataset calculated when trained with all instances.
+
+        Args:
+            `None`
+
+        Returns:
+            `float`: The R2 of the dataset calculated when trained with all instances.
+        """
+        return self.dataset_r2
+
+    def get_dataset_beta(self) -> float:
+        """
+        `get_dataset_beta` function
+
+        Description:
+            This function returns the beta of the dataset calculated when trained with all instances.
+
+        Args:
+            `None`
+
+        Returns:
+            `float`: The beta of the dataset calculated when trained with all instances.
+        """
+        return self.dataset_beta
+
     def calculate_dfbetas(self) -> None:
         """
         `calculate_dfbetas` function
