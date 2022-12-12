@@ -2,7 +2,7 @@ import pandas as pd
 from src.enums import ModelType, ModelName
 from src.data import Data
 import numpy as np
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import fbeta_score, mean_squared_error, r2_score
 
 class Model: 
     """
@@ -373,8 +373,23 @@ class Model:
         Returns:
             `None`
         """
+        self.beta = fbeta_score(y_true=self.data.get_y_test(), y_pred=self.predictions)
+        self.data.set_dataset_beta(self.beta)
 
+    def get_beta(self) -> float:
+        """
+        `get_beta` function
 
+        Description:
+            This function returns the beta score.
+
+        Args:
+            `None`
+
+        Returns:
+            `float`: The beta score.
+        """
+        return self.beta
 
     def predict(self, input) -> None:
         """

@@ -320,7 +320,7 @@ class Data:
             This function set the RMSE of the dataset.
 
         Args:
-            `None`
+            `dataset_rmse` (`float`): The RMSE of the dataset.
 
         Returns:
             `None`
@@ -342,35 +342,35 @@ class Data:
         """
         return self.dataset_rmse
     
-    def calculate_dataset_r2(self) -> None: 
+    def set_dataset_r2(self, dataset_r2:float) -> None: 
         """
-        `calculate_dataset_r2` function
+        `set_dataset_r2` function
 
         Description:
-            This function calculates the R2 of the dataset.
+            This function sets the R2 of the dataset calculated when trained with all instances.
 
         Args:
-            `None`
+            `dataset_r2` (`float`): The R2 Score of the dataset calculated when trained with all instances.
 
         Returns:
             `None`
         """
-        self.dataset_r2 = r2_score(self.y, self.dataset['prediction'])
+        self.dataset_r2 = dataset_r2
 
-    def calculate_dataset_beta(self) -> None:
+    def set_dataset_beta(self, dataset_beta:float) -> None:
         """
-        `calculate_dataset_beta` function
+        `set_dataset_beta` function
 
         Description:
-            This function calculates the beta of the dataset.
+            This function sets the beta of the dataset calculated when trained with all instances.
 
         Args:
-            `None`
+            `dataset_beta` (`float`): The beta of the dataset calculated when trained with all instances.
 
         Returns:
             `None`
         """
-        self.dataset_beta = self.dataset['prediction'].corr(self.y)
+        self.dataset_beta = dataset_beta
     
     def calculate_dfbetas(self) -> None:
         """
