@@ -31,6 +31,7 @@ class Data:
         self.dataset_file_name = dataset_file_name
         self.path = 'datasets/'+self.dataset_file_name.value+'.csv'
         self.dataset = pd.read_csv(self.path)
+        self.clean_data()
         self.X = None
         self.y = None
         self.X_test = None
@@ -116,8 +117,30 @@ class Data:
         """
         self.dataset = self.dataset.dropna()
         self.dataset = self.dataset.drop_duplicates()
-        print(self.dataset.head())
+
+        if self.dataset_file_name == Datasets.BreastCancer:
+            self.dataset['diagnosis'] = self.dataset['diagnosis'].map({'M': 1, 'B': 0}).replace({'M': 1, 'B': 0})
+        elif self.dataset_file_name == Datasets.CervicalCancer:
+            self.dataset['Dx:Cancer'] = self.dataset['Dx:Cancer'].map({'Yes': 1, 'No': 0}).replace({'Yes': 1, 'No': 0})
+            self.dataset.drop(['STDs: Time since first diagnosis', 'STDs: Time since last diagnosis'], axis=1, inplace=True)   
+        
+        self.normalize_data()
     
+    def normalize_data(self) -> None:
+        """
+        `normalize_data` function
+
+        Description: 
+            This function normalizes the dataset.
+
+        Args:
+            `self` (`Data`): The instance of the class `Data`.
+
+        Returns:
+            `None`
+        """
+        self.dataset = (self.dataset - self.dataset.mean()) / self.dataset.std()
+
     def split_dataset(self) -> None:
         """
         `split_dataset` function
@@ -132,11 +155,11 @@ class Data:
             `None`
         """
         if self.dataset_file_name == Datasets.BreastCancer:
-            self.dataset['diagnosis'] = self.dataset['diagnosis'].map({'M': 1, 'B': 0})
+            self.clean_data()
             self.X = self.dataset.drop('diagnosis', axis=1)
             self.y = self.dataset['diagnosis']
         elif self.dataset_file_name == Datasets.CervicalCancer:
-            self.dataset['Dx:Cancer'] = self.dataset['Dx:Cancer'].map({'Yes': 1, 'No': 0})
+            self.clean_data()
             self.X = self.dataset.drop('Dx:Cancer', axis=1)
             self.y = self.dataset['Dx:Cancer']
 
