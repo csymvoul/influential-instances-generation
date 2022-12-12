@@ -293,7 +293,7 @@ class Model:
         if self.model_name == ModelName.LogisticRegression:
             self.model.fit(self.data.get_X_train(), self.data.get_y_train())
         elif self.model_name == ModelName.KMeans:
-            self.model.fit(self.data.get_X_train())
+            self.model.fit(self.data.get_X_train, self.data.get_y_train())
         elif self.model_name == ModelName.KNeighborsClassifier:
             self.model.fit(self.data.get_X_train(), self.data.get_y_train())
         elif self.model_name == ModelName.SVC:

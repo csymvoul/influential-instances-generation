@@ -38,6 +38,7 @@ class Data:
         self.y_test = None
         self.y_train = None
         self.instances = None
+        self.set_instances()
         self.influential_instances = []
         self.dataset_beta = None
         self.dataset_rmse = None
@@ -155,6 +156,7 @@ class Data:
                                                                                 self.y, 
                                                                                 test_size = test_size, 
                                                                                 random_state = random_state)
+        print(self.X_train.shape, self.X_test.shape, self.y_train.shape, self.y_test.shape)
     
     def get_X(self) -> pd.DataFrame:
         """
