@@ -37,6 +37,7 @@ class Data:
         self.X_train = None
         self.y_test = None
         self.y_train = None
+        self.y_pred = None
         self.instances = None
         self.set_instances()
         self.train_test_split()
@@ -249,6 +250,36 @@ class Data:
         """
         return self.y_test
 
+    def set_y_pred(self, y_pred: pd.DataFrame) -> None:
+        """
+        `set_y_pred` function
+
+        Description:
+            This function sets the predicted labels.
+
+        Args:
+            `y_pred` (`pandas.DataFrame`): The predicted labels.
+
+        Returns:
+            `None`
+        """
+        self.y_pred = y_pred
+    
+    def get_y_pred(self) -> pd.DataFrame:
+        """
+        `get_y_pred` function
+
+        Description:
+            This function returns the predicted labels.
+
+        Args:
+            `None`
+
+        Returns:
+            `pandas.DataFrame`: The predicted labels.
+        """
+        return self.y_pred
+
     def set_instances(self) -> None:
         """
         `set_instances` function
@@ -372,6 +403,36 @@ class Data:
         """
         self.dataset_beta = dataset_beta
     
+    def get_dataset_r2(self) -> float:
+        """
+        `get_dataset_r2` function
+
+        Description:
+            This function returns the R2 of the dataset calculated when trained with all instances.
+
+        Args:
+            `None`
+
+        Returns:
+            `float`: The R2 of the dataset calculated when trained with all instances.
+        """
+        return self.dataset_r2
+
+    def get_dataset_beta(self) -> float:
+        """
+        `get_dataset_beta` function
+
+        Description:
+            This function returns the beta of the dataset calculated when trained with all instances.
+
+        Args:
+            `None`
+
+        Returns:
+            `float`: The beta of the dataset calculated when trained with all instances.
+        """
+        return self.dataset_beta
+
     def calculate_dfbetas(self) -> None:
         """
         `calculate_dfbetas` function
