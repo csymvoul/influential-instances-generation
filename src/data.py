@@ -45,6 +45,7 @@ class Data:
         self.threshold_dfbeta = None
         self.threshold_rmse = None
         self.threshold_r2 = None
+        self.dfbetas = None
     
     def get_dataset_file_name(self) -> Datasets:
         """
@@ -369,6 +370,23 @@ class Data:
         """
         self.dataset_beta = self.dataset['prediction'].corr(self.y)
     
+    def calculate_dfbetas(self) -> None:
+        """
+        `calculate_dfbetas` function
+
+        Description:
+            This function calculates the dfbetas for each instance of the dataset.
+
+        Args:
+            `None`
+
+        Returns:
+            `None`
+        """
+        for instance in self.instances:
+            instance.calculate_dfbetas()
+            self.dfbetas.append(instance.get_dfbeta())
+
     def visualize_data(self) -> None:
         """
         `visualize_data` function
