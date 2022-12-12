@@ -411,6 +411,7 @@ class Model:
             `None`
         """
         self.predictions = self.model.predict(input)
+        print("PREDICTIONS: \t{0}".format(self.predictions))
         self.data.set_y_pred(self.predictions)
 
     def get_prediction(self) -> (pd.Series | np.ndarray | pd.DataFrame | None):
