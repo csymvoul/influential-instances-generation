@@ -1,4 +1,3 @@
-from src.data import Data
 from src.instance import Instance
 
 class InfluentialInstance(Instance): 

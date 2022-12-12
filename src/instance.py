@@ -1,4 +1,6 @@
 from sklearn.metrics import mean_squared_error, r2_score
+import pandas as pd
+import numpy as np
 
 class Instance():
     """
@@ -8,7 +10,7 @@ class Instance():
         This class is used to create an instance of the `Instance` class.
     """
 
-    def __init__(self):
+    def __init__(self, instance_data: pd.Series) -> None:
         """ 
         Description:
             The constructor of the class `Instance`.
@@ -19,11 +21,27 @@ class Instance():
         Returns:
             `None`
         """
+        self.instance_data = instance_data
         self.dfbeta = None
         self.rmse = None
         self.r2 = None
         self.weights = None
     
+    def get_instance_data(self) -> pd.Series:
+        """
+        `get_instance_data` function
+
+        Description:
+            This function returns the instance data.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+
+        Returns:
+            instance_data (`pd.Series`): The instance data.
+        """
+        return self.instance_data
+
     def calculate_dfbeta(self) -> None:
         """
         `calculate_dfbeta` function

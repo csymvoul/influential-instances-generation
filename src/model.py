@@ -34,6 +34,7 @@ class Model:
         self.model = None
         self.set_model(model_name)
         self.set_type()
+        self.params = None
         self.data = data
         self.y_pred = None
         self.y_pred_proba = None
@@ -118,6 +119,22 @@ class Model:
             self.model = LinearRegression()
         else:
             raise ValueError('Invalid model name.')
+
+    def set_params(self, params: dict) -> None:
+        """
+        `set_params` function
+
+        Description:
+            This function sets the parameters of the model.
+
+        Args:
+            params (`dict`): The parameters of the model.
+        
+        Returns:
+            `None`
+        """
+        self.params = params
+        self.model.set_params(**params)
 
     def set_type(self) -> None:
         """
