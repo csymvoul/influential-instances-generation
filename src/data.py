@@ -39,6 +39,7 @@ class Data:
         self.y_train = None
         self.instances = None
         self.set_instances()
+        self.train_test_split()
         self.influential_instances = []
         self.dataset_beta = None
         self.dataset_rmse = None
@@ -311,12 +312,12 @@ class Data:
         influential_instance = InfluentialInstance(instance=self.instances[index])
         self.influential_instances.append(influential_instance)
 
-    def calculate_dataset_rmse(self) -> None:
+    def set_dataset_rmse(self, dataset_rmse:float) -> None:
         """
-        `calculate_dataset_rmse` function
+        `set_dataset_rmse` function
 
         Description:
-            This function calculates the RMSE of the dataset.
+            This function set the RMSE of the dataset.
 
         Args:
             `None`
@@ -324,7 +325,7 @@ class Data:
         Returns:
             `None`
         """
-        self.dataset_rmse = sqrt(mean_squared_error(self.y, self.dataset['prediction']))
+        self.dataset_rmse = dataset_rmse
     
     def get_dataset_rmse(self) -> float:
         """
