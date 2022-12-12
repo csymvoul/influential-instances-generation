@@ -22,10 +22,12 @@ class Instance():
             `None`
         """
         self.instance_data = instance_data
-        self.dfbeta = None
+        self.beta = None
         self.rmse = None
         self.r2 = None
         self.weights = None
+        self.overall_beta = None
+        self.dfbeta = None
     
     def get_instance_data(self) -> pd.Series:
         """
@@ -48,6 +50,52 @@ class Instance():
 
         Description:
             This function calculates the dfbeta value for each instance in the dataset.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+
+        Returns:
+            `None`
+        """
+        self.dfbeta = self.beta - self.overall_beta
+    
+    def get_dfbeta(self) -> float:
+        """
+        `get_dfbeta` function
+
+        Description:
+            This function returns the dfbeta value for each instance in the dataset.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+
+        Returns:
+            dfbeta (`float`): The dfbeta value for each instance in the dataset.
+        """
+        return self.dfbeta
+
+    def set_overall_beta(self, overall_beta: float) -> None:
+        """
+        `set_overall_beta` function
+
+        Description:
+            This function sets the overall beta value for each instance in the dataset.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+            overall_beta (`float`): The overall beta value for each instance in the dataset.
+
+        Returns:
+            `None`
+        """
+        self.overall_beta = overall_beta
+
+    def calculate_beta(self) -> None:
+        """
+        `calculate_beta` function
+
+        Description:
+            This function calculates the beta value for each instance in the dataset.
 
         Args:
             `self` (`Instance`): The instance of the class `Instance`.
@@ -87,20 +135,20 @@ class Instance():
         """
         pass
 
-    def get_dfbeta(self) -> float: 
+    def get_beta(self) -> float: 
         """
-        `get_dfbeta` function
+        `get_beta` function
 
         Description:
-            This function returns the dfbeta value for each instance in the dataset.
+            This function returns the beta value for each instance in the dataset.
 
         Args:
             `self` (`Instance`): The instance of the class `Instance`.
 
         Returns:
-            dfbeta (`float`): The dfbeta value for each instance in the dataset.
+            beta (`float`): The beta value for each instance in the dataset.
         """
-        return self.dfbeta
+        return self.beta
     
     def get_rmse(self) -> float:
         """

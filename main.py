@@ -44,4 +44,11 @@ print("Dataset:\t{0}".format(model.get_data().get_dataset_file_name().value))
 
 model.get_data().set_instances()
 data = model.get_data()
-print("First instance: \n {0}".format(data.get_instance(0).get_instance_data()))
+
+# Fit the model
+model.fit()
+print("Model fitted")
+print("Model coefficients: {0}".format(model.get_weights()))
+model.predict(model.get_data().get_X_test())
+model.calculate_rmse()
+print("RMSE: {0}".format(model.get_rmse()))

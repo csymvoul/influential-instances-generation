@@ -38,6 +38,8 @@ class Data:
         self.y_test = None
         self.y_train = None
         self.instances = None
+        self.set_instances()
+        self.train_test_split()
         self.influential_instances = []
         self.dataset_beta = None
         self.dataset_rmse = None
@@ -45,6 +47,7 @@ class Data:
         self.threshold_dfbeta = None
         self.threshold_rmse = None
         self.threshold_r2 = None
+        self.dfbetas = None
     
     def get_dataset_file_name(self) -> Datasets:
         """
@@ -154,6 +157,7 @@ class Data:
                                                                                 self.y, 
                                                                                 test_size = test_size, 
                                                                                 random_state = random_state)
+        print(self.X_train.shape, self.X_test.shape, self.y_train.shape, self.y_test.shape)
     
     def get_X(self) -> pd.DataFrame:
         """
@@ -261,7 +265,6 @@ class Data:
         self.instances = []
         for i in range(len(self.dataset)):
             self.instances.append(Instance(instance_data=self.dataset.iloc[i]))
-        count = 0
 
     def get_instances(self) -> list[Instance]:
         """
@@ -309,12 +312,12 @@ class Data:
         influential_instance = InfluentialInstance(instance=self.instances[index])
         self.influential_instances.append(influential_instance)
 
-    def calculate_dataset_rmse(self) -> None:
+    def set_dataset_rmse(self, dataset_rmse:float) -> None:
         """
-        `calculate_dataset_rmse` function
+        `set_dataset_rmse` function
 
         Description:
-            This function calculates the RMSE of the dataset.
+            This function set the RMSE of the dataset.
 
         Args:
             `None`
@@ -322,7 +325,7 @@ class Data:
         Returns:
             `None`
         """
-        self.dataset_rmse = sqrt(mean_squared_error(self.y, self.dataset['prediction']))
+        self.dataset_rmse = dataset_rmse
     
     def get_dataset_rmse(self) -> float:
         """
@@ -369,6 +372,23 @@ class Data:
         """
         self.dataset_beta = self.dataset['prediction'].corr(self.y)
     
+    def calculate_dfbetas(self) -> None:
+        """
+        `calculate_dfbetas` function
+
+        Description:
+            This function calculates the dfbetas for each instance of the dataset.
+
+        Args:
+            `None`
+
+        Returns:
+            `None`
+        """
+        for instance in self.instances:
+            instance.calculate_dfbetas()
+            self.dfbetas.append(instance.get_dfbeta())
+
     def visualize_data(self) -> None:
         """
         `visualize_data` function

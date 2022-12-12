@@ -1,7 +1,8 @@
 import pandas as pd
 from src.enums import ModelType, ModelName
 from src.data import Data
-
+import numpy as np
+from sklearn.metrics import mean_squared_error, r2_score
 
 class Model: 
     """
@@ -38,12 +39,14 @@ class Model:
         self.data = data
         self.y_pred = None
         self.y_pred_proba = None
+        self.rmse = None
         self.accuracy = None
         self.precision = None
         self.recall = None
         self.f1_score = None
         self.roc_auc_score = None
         self.confusion_matrix = None
+        self.predictions = None
 
     def set_model(self, model_name: ModelName) -> None:
         """
@@ -293,7 +296,7 @@ class Model:
         if self.model_name == ModelName.LogisticRegression:
             self.model.fit(self.data.get_X_train(), self.data.get_y_train())
         elif self.model_name == ModelName.KMeans:
-            self.model.fit(self.data.get_X_train())
+            self.model.fit(self.data.get_X_train, self.data.get_y_train())
         elif self.model_name == ModelName.KNeighborsClassifier:
             self.model.fit(self.data.get_X_train(), self.data.get_y_train())
         elif self.model_name == ModelName.SVC:
@@ -356,4 +359,84 @@ class Model:
             return self.model.coef_
         elif self.model_name == ModelName.QuadraticDiscriminantAnalysis:
             return self.model.theta_
+
+    def calculate_beta(self):
+        """
+        `calculate_beta` function
+
+        Description:
+            This function calculates the beta score.
+
+        Args:
+            `None`
+
+        Returns:
+            `None`
+        """
+
+
+
+    def predict(self, input) -> None:
+        """
+        `predict` function
+
+        Description:
+            The method to predict the test data.
+        
+        Args:
+            * input (`Any`): The input data.
+        
+        Returns:
+            `None`
+        """
+        self.predictions = self.model.predict(input)
+
+    def get_prediction(self) -> (pd.Series | np.ndarray | pd.DataFrame | None):
+        """
+        `get_prediction` function
+
+        Description:
+            This function returns the predictions of the model.
+        
+        Args:
+            `None`
+        
+        Returns:
+            `(pd.Series | np.ndarray | pd.DataFrame | None)`: The predictions of the model.
+        """
+        return self.predictions
+
+    def calculate_rmse(self):
+        """
+        `calculate_rmse` function
+
+        Description:
+            This function calculates the root mean squared error of the model.
+        
+        Args:
+            `None`
+        
+        Returns:
+            `float`: The root mean squared error of the model.
+        """
+        if self.predictions is None:
+            raise ValueError("The model has not made any predictions yet. Please use the `predict()` function first.")
+        self.rmse = np.sqrt(mean_squared_error(self.data.get_y_test(), self.predictions))
+
+        self.data.set_dataset_rmse(self.rmse)
+    
+    def get_rmse(self) -> float:
+        """
+        `get_rmse` function
+
+        Description:
+            This function returns the root mean squared error of the model.
+        
+        Args:
+            `None`
+        
+        Returns:
+            `float`: The root mean squared error of the model.
+        """
+        return self.rmse
         
