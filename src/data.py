@@ -264,7 +264,6 @@ class Data:
         self.instances = []
         for i in range(len(self.dataset)):
             self.instances.append(Instance(instance_data=self.dataset.iloc[i]))
-        count = 0
 
     def get_instances(self) -> list[Instance]:
         """
