@@ -46,9 +46,10 @@ model.get_data().set_instances()
 data = model.get_data()
 
 # Fit the model
+print("\nFitting the model...")
 model.fit()
-print("Model fitted")
-print("Model coefficients: {0}".format(model.get_weights()))
+print("Model fitted\n")
+print("Model coefficients: \n{0}\n".format(model.get_weights()))
 model.predict(model.get_data().get_X_test())
 model.calculate_rmse()
 print("RMSE: {0}".format(model.get_rmse()))
