@@ -8,7 +8,8 @@ class ArgsParser:
     """
     @staticmethod
     def parse_args():
-        """parse_args function
+        """
+        parse_args function
 
         Description:
             This function parses the arguments passed to the program.
