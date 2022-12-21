@@ -7,8 +7,8 @@ from src.args_parser import ArgsParser
 args = ArgsParser().parse_args()
 
 print("Arguments:")
-print("data:\t{0}".format(args.data))
-print("model:\t{0}".format(args.model))
+print("\tdata:\t{0}".format(args.data))
+print("\tmodel:\t{0}".format(args.model))
 
 try:
     # Dataset specified 
@@ -35,12 +35,11 @@ except:
         warnings.warn('Model type not specified. Using the default model (LogisticRegression)', category=DeprecationWarning)
         model = Model()
 
-print()
-print("Model type:\t{0}".format(model.get_type().value))
-print("Model name:\t{0}".format(model.get_model_name().value))
-print("Model:\t\t{0}".format(type(model.get_model())))
-
-print("Dataset:\t{0}".format(model.get_data().get_dataset_file_name().value))
+print("\nInformation:")
+print("\tModel type:\t{0}".format(model.get_type().value))
+print("\tModel name:\t{0}".format(model.get_model_name().value))
+print("\tModel:\t\t{0}".format(type(model.get_model())))
+print("\tDataset:\t{0}".format(model.get_data().get_dataset_file_name().value))
 
 model.get_data().set_instances()
 data = model.get_data()
