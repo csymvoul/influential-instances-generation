@@ -37,7 +37,7 @@ class Model:
         self.set_type()
         self.params = None
         self.data = data
-        self.data.clean_data()
+        # self.data.clean_data()
         self.y_pred = None
         self.y_pred_proba = None
         self.beta = None
@@ -411,10 +411,13 @@ class Model:
         Returns:
             `None`
         """
-        self.predictions = self.model.predict(input)
-        self.data.set_y_pred(self.predictions)
+        if self.model_name == ModelName.LogisticRegression:
+            from sklearn.linear_model import LogisticRegression
+            self.predictions = self.model.predict_proba(input)
+        else:
+            self.data.set_y_pred(self.predictions)
 
-    def get_prediction(self) -> (pd.Series | np.ndarray | pd.DataFrame | None):
+    def get_predictions(self) -> (pd.Series | np.ndarray | pd.DataFrame | None):
         """
         `get_prediction` function
 
