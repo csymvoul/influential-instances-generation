@@ -341,7 +341,7 @@ class Model:
         elif self.model_name == ModelName.KMeans:
             return self.model.means_ 
         elif self.model_name == ModelName.KNeighborsClassifier:
-            return self.model.means_
+            return self.model.kneighbors_graph()
         elif self.model_name == ModelName.SVC:
             return self.model.support_vectors_
         elif self.model_name == ModelName.DecisionTreeClassifier:
@@ -412,10 +412,33 @@ class Model:
             `None`
         """
         if self.model_name == ModelName.LogisticRegression:
-            from sklearn.linear_model import LogisticRegression
             self.predictions = self.model.predict_proba(input)
-        else:
-            self.data.set_y_pred(self.predictions)
+        elif self.model_name == ModelName.KMeans:
+            self.predictions = self.model.predict(input)
+        elif self.model_name == ModelName.KNeighborsClassifier:
+            self.predictions = self.model.predict(input)
+        elif self.model_name == ModelName.SVC:
+            self.predictions = self.model.predict(input)
+        elif self.model_name == ModelName.DecisionTreeClassifier:
+            self.predictions = self.model.predict(input)
+        elif self.model_name == ModelName.RandomForestClassifier:
+            self.predictions = self.model.predict(input)
+        elif self.model_name == ModelName.GradientBoostingClassifier:
+            self.predictions = self.model.predict(input)
+        elif self.model_name == ModelName.XGBClassifier:
+            self.predictions = self.model.predict(input)
+        elif self.model_name == ModelName.CatBoostClassifier:
+            self.predictions = self.model.predict(input)
+        elif self.model_name == ModelName.MLPClassifier:
+            self.predictions = self.model.predict(input)
+        elif self.model_name == ModelName.GaussianNB:
+            self.predictions = self.model.predict(input)
+        elif self.model_name == ModelName.LinearDiscriminantAnalysis:
+            self.predictions = self.model.predict(input)
+        elif self.model_name == ModelName.QuadraticDiscriminantAnalysis:
+            self.predictions = self.model.predict(input)
+        elif self.model_name == ModelName.LinearRegression:
+            self.predictions = self.model.predict(input)
 
     def get_predictions(self) -> (pd.Series | np.ndarray | pd.DataFrame | None):
         """
