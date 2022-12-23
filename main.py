@@ -48,17 +48,8 @@ data = model.get_data()
 print("\nFitting the model...")
 model.fit()
 print("Model fitted\n")
-# print("Model coefficients: \n{0}\n".format(model.get_weights()))
-# print("Model accuracy: {0}\n".format(model.get_accuracy()))
-# # print(model.get_data().get_X_test())
-# print(model.get_data().get_X_train().iloc[0])
-# print(model.get_data().get_X_test().iloc[0])
+
 
 model.predict(model.get_data().get_X_test())
 print("Predictions: \n{0}\n".format(model.get_predictions()))
 print("Actual values: \n{0}\n".format(model.get_data().get_y_test().to_numpy()))
-
-# # model.calculate_rmse()
-# model.calculate_beta()
-# print("RMSE: {0}".format(model.get_rmse()))
-# print("Dataset BETA: {0}".format(model.get_data().get_dataset_beta()))
