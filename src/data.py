@@ -31,7 +31,7 @@ class Data:
         self.dataset_file_name = dataset_file_name
         self.path = 'datasets/'+self.dataset_file_name.value+'.csv'
         self.dataset = pd.read_csv(self.path)
-        self.clean_data()
+        # self.clean_data()
         self.X = None
         self.y = None
         self.X_test = None
@@ -107,7 +107,7 @@ class Data:
 
         Description: 
             This function performs data cleaning to the given dataset. 
-            In particular, it removes null values and duplicates.
+            In particular, it removes `None` or empty values and duplicates.
 
         Args:
             `self` (`Data`): The instance of the class `Data`.
@@ -119,12 +119,11 @@ class Data:
         self.dataset = self.dataset.drop_duplicates()
 
         if self.dataset_file_name == Datasets.BreastCancer:
-            self.dataset['diagnosis'] = self.dataset['diagnosis'].map({'M': 1, 'B': 0}).replace({'M': 1, 'B': 0})
+            self.dataset['diagnosis'] = self.dataset['diagnosis'].replace('M', 1).replace('B', 0)
         elif self.dataset_file_name == Datasets.CervicalCancer:
-            self.dataset['Dx:Cancer'] = self.dataset['Dx:Cancer'].map({'Yes': 1, 'No': 0}).replace({'Yes': 1, 'No': 0})
+            self.dataset['Dx:Cancer'] = self.dataset['Dx:Cancer'].replace('Yes', 1).replace('No', 0)
             self.dataset.drop(['STDs: Time since first diagnosis', 'STDs: Time since last diagnosis'], axis=1, inplace=True)   
-        
-        self.normalize_data()
+        # self.normalize_data()
     
     def normalize_data(self) -> None:
         """
@@ -158,6 +157,7 @@ class Data:
             self.clean_data()
             self.X = self.dataset.drop('diagnosis', axis=1)
             self.y = self.dataset['diagnosis']
+            print(self.y)
         elif self.dataset_file_name == Datasets.CervicalCancer:
             self.clean_data()
             self.X = self.dataset.drop('Dx:Cancer', axis=1)
@@ -181,7 +181,6 @@ class Data:
                                                                                 self.y, 
                                                                                 test_size = test_size, 
                                                                                 random_state = random_state)
-        print(self.X_train.shape, self.X_test.shape, self.y_train.shape, self.y_test.shape)
     
     def get_X(self) -> pd.DataFrame:
         """
