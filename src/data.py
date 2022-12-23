@@ -31,7 +31,7 @@ class Data:
         self.dataset_file_name = dataset_file_name
         self.path = 'datasets/'+self.dataset_file_name.value+'.csv'
         self.dataset = pd.read_csv(self.path)
-        self.clean_data()
+        # self.clean_data()
         self.X = None
         self.y = None
         self.X_test = None
@@ -181,7 +181,6 @@ class Data:
                                                                                 self.y, 
                                                                                 test_size = test_size, 
                                                                                 random_state = random_state)
-        print(self.X_train.shape, self.X_test.shape, self.y_train.shape, self.y_test.shape)
     
     def get_X(self) -> pd.DataFrame:
         """
