@@ -123,7 +123,6 @@ class Data:
         elif self.dataset_file_name == Datasets.CervicalCancer:
             self.dataset['Dx:Cancer'] = self.dataset['Dx:Cancer'].replace('Yes', 1).replace('No', 0)
             self.dataset.drop(['STDs: Time since first diagnosis', 'STDs: Time since last diagnosis'], axis=1, inplace=True)   
-        # self.normalize_data()
     
     def normalize_data(self) -> None:
         """
@@ -157,7 +156,6 @@ class Data:
             self.clean_data()
             self.X = self.dataset.drop('diagnosis', axis=1)
             self.y = self.dataset['diagnosis']
-            print(self.y)
         elif self.dataset_file_name == Datasets.CervicalCancer:
             self.clean_data()
             self.X = self.dataset.drop('Dx:Cancer', axis=1)

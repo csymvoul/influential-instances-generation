@@ -2,7 +2,7 @@ import pandas as pd
 from src.enums import ModelType, ModelName
 from src.data import Data
 import numpy as np
-from sklearn.metrics import fbeta_score, mean_squared_error, r2_score
+from sklearn.metrics import fbeta_score, mean_squared_error, r2_score, accuracy_score, precision_score, recall_score, f1_score
 
 class Model: 
     """
@@ -378,7 +378,6 @@ class Model:
         """
         if self.predictions is None:
             raise ValueError("The model has not made any predictions yet. Please use the `predict()` function first.")
-        print(self.predictions)
         
         self.beta = fbeta_score(self.data.get_y_test(), self.predictions, beta = 1)
         self.data.set_dataset_beta(self.beta)
@@ -488,4 +487,48 @@ class Model:
             `float`: The root mean squared error of the model.
         """
         return self.rmse
+
+    def get_accuracy(self) -> float:
+        """
+        `get_accuracy` function
+
+        Description:
+            This function returns the accuracy of the model.
         
+        Args:
+            `None`
+        
+        Returns:
+            `float`: The accuracy of the model.
+        """
+        return accuracy_score(self.data.get_y_test(), self.predictions)
+    
+    def get_f1(self) -> float:
+        """
+        `get_f1` function
+
+        Description:
+            This function returns the f1 score of the model.
+        
+        Args:
+            `None`
+        
+        Returns:
+            `float`: The f1 score of the model.
+        """
+        return f1_score(self.data.get_y_test(), self.predictions)
+
+    def get_precision(self) -> float:
+        """
+        `get_precision` function
+
+        Description:
+            This function returns the precision of the model.
+        
+        Args:
+            `None`
+        
+        Returns:
+            `float`: The precision of the model.
+        """
+        return precision_score(self.data.get_y_test(), self.predictions)
