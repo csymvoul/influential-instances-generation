@@ -411,7 +411,11 @@ class Model:
             `None`
         """
         if self.model_name == ModelName.LogisticRegression:
-            self.predictions = self.model.predict_proba(input)
+            self.predictions_proba = self.model.predict_proba(input)
+            if self.predictions_proba is None:
+                raise ValueError("The model has not made any predictions yet. Please use the `predict()` function first.")
+            else: 
+                self.predictions = np.argmax(self.predictions_proba, axis = 1)
         elif self.model_name == ModelName.KMeans:
             self.predictions = self.model.predict(input)
         elif self.model_name == ModelName.KNeighborsClassifier:
