@@ -9,6 +9,9 @@ class Datasets(Enum):
     """
     BreastCancer = 'BreastCancer'
     CervicalCancer = 'CervicalCancer'
+    XD6 = 'XD6'
+    Mifem = 'Mifem'
+    Corral = 'Corral'
 
 class ModelName(Enum):
     """
