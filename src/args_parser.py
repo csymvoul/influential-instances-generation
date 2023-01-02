@@ -1,4 +1,4 @@
-import argparse
+import argparse, textwrap
 
 class ArgsParser:
     """
@@ -20,9 +20,35 @@ class ArgsParser:
         Returns:
             `argparse.Namespace`: The parsed arguments.
         """
-        parser=argparse.ArgumentParser()
+        parser=argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
 
-        parser.add_argument("--data", help="The dataset used for training of the model.")
-        parser.add_argument("--model", help="The model which will be used for training.")
+        parser.add_argument("--data", 
+                            help=textwrap.dedent('''\
+                                The dataset used for training of the model. 
+                                The available datasets are the following:
+                                    * BreastCancer 
+                                    * CervicalCancer 
+                                    * XD6 
+                                    * Mifem
+                                    * Corral''')
+        )
+        parser.add_argument("--model", 
+                            help=textwrap.dedent('''\
+                                The model which will be used for training.
+                                The available models are the following: 
+                                    * LogisticRegression 
+                                    * KNeighborsClassifier 
+                                    * SVC 
+                                    * KMeans 
+                                    * DecisionTreeClassifier 
+                                    * RandomForestClassifier 
+                                    * GradientBoostingClassifier 
+                                    * XGBClassifier 
+                                    * CatBoostClassifier 
+                                    * MLPClassifier 
+                                    * GaussianNB 
+                                    * LinearDiscriminantAnalysis 
+                                    * QuadraticDiscriminantAnalysis 
+                                    * LinearRegression'''))
 
         return parser.parse_args()
