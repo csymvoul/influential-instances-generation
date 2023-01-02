@@ -30,8 +30,7 @@ class ArgsParser:
                                     * CervicalCancer 
                                     * XD6 
                                     * Mifem
-                                    * Corral''')
-        )
+                                    * Corral'''))
         parser.add_argument("--model", 
                             help=textwrap.dedent('''\
                                 The model which will be used for training.
