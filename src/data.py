@@ -113,7 +113,7 @@ class Data:
             `self` (`Data`): The instance of the class `Data`.
 
         Returns:
-            dataset (`pandas.DataFrame`): The dataset without null values and duplicates.
+            `None`
         """
         self.dataset = self.dataset.dropna()
         self.dataset = self.dataset.drop_duplicates()
@@ -122,7 +122,32 @@ class Data:
             self.dataset['diagnosis'] = self.dataset['diagnosis'].replace('M', 1).replace('B', 0)
         elif self.dataset_file_name == Datasets.CervicalCancer:
             self.dataset['Dx:Cancer'] = self.dataset['Dx:Cancer'].replace('Yes', 1).replace('No', 0)
-            self.dataset.drop(['STDs: Time since first diagnosis', 'STDs: Time since last diagnosis'], axis=1, inplace=True)   
+            self.dataset.drop([ 'Num_of_pregnancies',
+                                'STDs:_Time_since_first_diagnosis', 
+                                'STDs:_Time_since_last_diagnosis', 
+                                'Number_of_sexual_partners', 
+                                'First_sexual_intercourse', 
+                                'Smokes', 
+                                'Smokes_(years)', 
+                                'Smokes_(packs/year)', 
+                                'Hormonal_Contraceptives',
+                                'Hormonal_Contraceptives_(years)',
+                                'IUD',
+                                'IUD_years',
+                                'STDs',
+                                'STDs_number',
+                                'STDs:condylomatosis',
+                                'STDs:cervical_condylomatosis',
+                                'STDs:vaginal_condylomatosis',
+                                'STDs:vulvo-perineal_condylomatosis',
+                                'STDs:syphilis',
+                                'STDs:pelvic_inflammatory_disease',
+                                'STDs:genital_herpes',
+                                'STDs:molluscum_contagiosum',
+                                'STDs:AIDS',
+                                'STDs:HIV',
+                                'STDs:Hepatitis_B',
+                                'STDs:HPV'], axis=1, inplace=True)
     
     def normalize_data(self) -> None:
         """
