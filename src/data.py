@@ -119,6 +119,7 @@ class Data:
         self.dataset = self.dataset.drop_duplicates()
 
         if self.dataset_file_name == Datasets.BreastCancer:
+            self.dataset.drop(['id'], axis=1, inplace=True)
             self.dataset['diagnosis'] = self.dataset['diagnosis'].replace('M', 1).replace('B', 0)
         elif self.dataset_file_name == Datasets.CervicalCancer:
             self.dataset['Dx:Cancer'] = self.dataset['Dx:Cancer'].replace('Yes', 1).replace('No', 0)
@@ -148,7 +149,16 @@ class Data:
                                 'STDs:HIV',
                                 'STDs:Hepatitis_B',
                                 'STDs:HPV'], axis=1, inplace=True)
-    
+        elif self.dataset_file_name == Datasets.Mifem:
+            self.dataset['outcome'] = self.dataset['outcome'].replace('live', 1).replace('dead', 0)
+            self.dataset['premi'] = self.dataset['premi'].replace('y', 2).replace('n', 1).replace('nk', 0)
+            self.dataset['smstat'] = self.dataset['smstat'].replace('c', 3).replace('x', 2).replace('n', 1).replace('nk', 0)
+            self.dataset['diabetes'] = self.dataset['diabetes'].replace('y', 2).replace('n', 1).replace('nk', 0)
+            self.dataset['highbp'] = self.dataset['highbp'].replace('y', 2).replace('n', 1).replace('nk', 0)
+            self.dataset['hichol'] = self.dataset['hichol'].replace('y', 2).replace('n', 1).replace('nk', 0)
+            self.dataset['angina'] = self.dataset['angina'].replace('y', 2).replace('n', 1).replace('nk', 0)
+            self.dataset['stroke'] = self.dataset['stroke'].replace('y', 2).replace('n', 1).replace('nk', 0) 
+
     def normalize_data(self) -> None:
         """
         `normalize_data` function
@@ -185,6 +195,16 @@ class Data:
             self.clean_data()
             self.X = self.dataset.drop('Dx:Cancer', axis=1)
             self.y = self.dataset['Dx:Cancer']
+        elif self.dataset_file_name == Datasets.Corral:
+            self.X = self.dataset.drop('Class', axis=1)
+            self.y = self.dataset['Class']
+        elif self.dataset_file_name == Datasets.Mifem:
+            self.clean_data()
+            self.X = self.dataset.drop('outcome', axis=1)
+            self.y = self.dataset['outcome']
+        elif self.dataset_file_name == Datasets.XD6:
+            self.X = self.dataset.drop('Class', axis=1)
+            self.y = self.dataset['Class']
 
     def train_test_split(self, test_size: float = 0.2, random_state: int = 42) -> None:
         """

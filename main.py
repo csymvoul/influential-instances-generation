@@ -49,7 +49,7 @@ print("\nFitting the model...")
 model.fit()
 print("Model fitted\n")
 
-
+# Prediction and evaluation
 model.predict(model.get_data().get_X_test())
 print("Predictions: \n{0}\n".format(model.get_predictions()))
 print("Actual values: \n{0}\n".format(model.get_data().get_y_test().to_numpy()))
