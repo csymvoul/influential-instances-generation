@@ -157,10 +157,7 @@ class Data:
             self.dataset['highbp'] = self.dataset['highbp'].replace('y', 2).replace('n', 1).replace('nk', 0)
             self.dataset['hichol'] = self.dataset['hichol'].replace('y', 2).replace('n', 1).replace('nk', 0)
             self.dataset['angina'] = self.dataset['angina'].replace('y', 2).replace('n', 1).replace('nk', 0)
-            self.dataset['stroke'] = self.dataset['stroke'].replace('y', 2).replace('n', 1).replace('nk', 0)
-            print(self.dataset.head())
-            
-
+            self.dataset['stroke'] = self.dataset['stroke'].replace('y', 2).replace('n', 1).replace('nk', 0) 
 
     def normalize_data(self) -> None:
         """
