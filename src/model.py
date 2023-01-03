@@ -497,7 +497,7 @@ class Model:
         `get_accuracy` function
 
         Description:
-            This function returns the accuracy of the model.
+            This function calculates and returns the accuracy of the model.
         
         Args:
             `None`
@@ -505,14 +505,15 @@ class Model:
         Returns:
             `float`: The accuracy of the model.
         """
-        return accuracy_score(self.data.get_y_test(), self.predictions)
+        self.accuracy = accuracy_score(self.data.get_y_test(), self.predictions)
+        return self.accuracy
     
     def get_f1_score(self) -> float:
         """
         `get_f1` function
 
         Description:
-            This function returns the f1 score of the model.
+            This function calculates and returns the f1 score of the model.
         
         Args:
             `None`
@@ -520,7 +521,8 @@ class Model:
         Returns:
             `float`: The f1 score of the model.
         """
-        return f1_score(self.data.get_y_test(), self.predictions)
+        self.f1_score = f1_score(self.data.get_y_test(), self.predictions)
+        return self.f1_score
 
     def get_precision(self) -> float:
         """
@@ -535,7 +537,8 @@ class Model:
         Returns:
             `float`: The precision of the model.
         """
-        return precision_score(self.data.get_y_test(), self.predictions)
+        self.precision = precision_score(self.data.get_y_test(), self.predictions)
+        return self.precision
     
     def get_recall(self) -> float:
         """
@@ -550,4 +553,5 @@ class Model:
         Returns:
             `float`: The recall of the model.
         """
-        return recall_score(self.data.get_y_test(), self.predictions)
+        self.recall = recall_score(self.data.get_y_test(), self.predictions)
+        return self.recall
