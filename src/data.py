@@ -108,6 +108,7 @@ class Data:
         Description: 
             This function performs data cleaning to the given dataset. 
             In particular, it removes `None` or empty values and duplicates.
+            Also, it performs some changes to the dataset, such as replacing values or dropping columns.
 
         Args:
             `self` (`Data`): The instance of the class `Data`.
