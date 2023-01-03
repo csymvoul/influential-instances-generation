@@ -529,7 +529,7 @@ class Model:
         `get_precision` function
 
         Description:
-            This function returns the precision of the model.
+            This function calculates and returns the precision of the model.
         
         Args:
             `None`
@@ -545,7 +545,7 @@ class Model:
         `get_recall` function
 
         Description:
-            This function returns the recall of the model.
+            This function calculates and returns the recall of the model.
         
         Args:
             `None`
