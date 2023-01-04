@@ -544,4 +544,124 @@ class Data:
         self.dataset.hist(bins=50, figsize=(20,15))
         plt.show()
 
-    def 
+    def set_dataset_accuracy(self, dataset_accuracy: float) -> None:
+        """
+        `set_dataset_accuracy` function
+
+        Description:
+            This function sets the accuracy of the dataset calculated when trained with all instances.
+
+        Args:
+            `dataset_accuracy` (`float`): The accuracy of the dataset calculated when trained with all instances.
+
+        Returns:
+            `None`
+        """
+        self.dataset_accuracy = dataset_accuracy
+    
+    def get_dataset_accuracy(self) -> float:
+        """
+        `get_dataset_accuracy` function
+
+        Description:
+            This function returns the accuracy of the dataset calculated when trained with all instances.
+
+        Args:
+            `None`
+
+        Returns:
+            `float`: The accuracy of the dataset calculated when trained with all instances.
+        """
+        return self.dataset_accuracy
+    
+    def set_dataset_precision(self, dataset_precision: float) -> None:
+        """
+        `set_dataset_precision` function
+
+        Description:
+            This function sets the precision of the dataset calculated when trained with all instances.
+
+        Args:
+            `dataset_precision` (`float`): The precision of the dataset calculated when trained with all instances.
+
+        Returns:
+            `None`
+        """
+        self.dataset_precision = dataset_precision
+    
+    def get_dataset_precision(self) -> float:
+        """
+        `get_dataset_precision` function
+
+        Description:
+            This function returns the precision of the dataset calculated when trained with all instances.
+
+        Args:
+            `None`
+
+        Returns:
+            `float`: The precision of the dataset calculated when trained with all instances.
+        """
+        return self.dataset_precision
+    
+    def set_dataset_recall(self, dataset_recall: float) -> None:
+        """
+        `set_dataset_recall` function
+
+        Description:
+            This function sets the recall of the dataset calculated when trained with all instances.
+
+        Args:
+            `dataset_recall` (`float`): The recall of the dataset calculated when trained with all instances.
+
+        Returns:
+            `None`
+        """
+        self.dataset_recall = dataset_recall
+    
+    def get_dataset_recall(self) -> float:
+        """
+        `get_dataset_recall` function
+
+        Description:
+            This function returns the recall of the dataset calculated when trained with all instances.
+
+        Args:
+            `None`
+
+        Returns:
+            `float`: The recall of the dataset calculated when trained with all instances.
+        """
+        return self.dataset_recall
+    
+    def set_dataset_f1_score(self, dataset_f1_score: float) -> None:
+        """
+        `set_dataset_f1_score` function
+
+        Description:
+            This function sets the F1 Score of the dataset calculated when trained with all instances.
+
+        Args:
+            `dataset_f1` (`float`): The F1 Score of the dataset calculated when trained with all instances.
+
+        Returns:
+            `None`
+        """
+        self.dataset_f1_score = dataset_f1_score
+    
+    def get_dataset_f1_score(self) -> float:
+        """
+        `get_dataset_f1_score` function
+
+        Description:
+            This function returns the F1 Score of the dataset calculated when trained with all instances.
+
+        Args:
+            `None`
+
+        Returns:
+            `float`: The F1 Score of the dataset calculated when trained with all instances.
+        """
+        return self.dataset_f1_score
+    
+    
