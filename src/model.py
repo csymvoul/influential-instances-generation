@@ -506,6 +506,7 @@ class Model:
             `float`: The accuracy of the model.
         """
         self.accuracy = accuracy_score(self.data.get_y_test(), self.predictions)
+        self.data.set_dataset_accuracy(self.accuracy)
         return self.accuracy
     
     def get_f1_score(self) -> float:
@@ -522,6 +523,7 @@ class Model:
             `float`: The f1 score of the model.
         """
         self.f1_score = f1_score(self.data.get_y_test(), self.predictions)
+        self.data.set_dataset_f1_score(self.f1_score)
         return self.f1_score
 
     def get_precision(self) -> float:
@@ -538,6 +540,7 @@ class Model:
             `float`: The precision of the model.
         """
         self.precision = precision_score(self.data.get_y_test(), self.predictions)
+        self.data.set_dataset_precision(self.precision)
         return self.precision
     
     def get_recall(self) -> float:
@@ -554,4 +557,5 @@ class Model:
             `float`: The recall of the model.
         """
         self.recall = recall_score(self.data.get_y_test(), self.predictions)
+        self.data.set_dataset_recall(self.recall)
         return self.recall
