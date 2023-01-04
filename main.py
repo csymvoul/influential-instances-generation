@@ -44,6 +44,8 @@ print("\tDataset:\t{0}".format(model.get_data().get_dataset_file_name().value))
 model.get_data().set_instances()
 data = model.get_data()
 
+model.train_for_influential_instances()
+
 # Fit the model
 print("\nFitting the model...")
 model.fit()

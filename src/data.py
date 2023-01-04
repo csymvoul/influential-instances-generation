@@ -663,5 +663,3 @@ class Data:
             `float`: The F1 Score of the dataset calculated when trained with all instances.
         """
         return self.dataset_f1_score
-    
-    

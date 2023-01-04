@@ -559,3 +559,19 @@ class Model:
         self.recall = recall_score(self.data.get_y_test(), self.predictions)
         self.data.set_dataset_recall(self.recall)
         return self.recall
+
+    def train_for_influential_instances(self) -> None:
+        """
+        `train_for_influential_instances` function
+
+        Description:
+            This function trains the dataset without one row each time.
+
+        Args:
+            `None`
+
+        Returns:
+            `None`
+        """
+        for instance in self.data.get_dataset().iterrows():
+            print(instance)
