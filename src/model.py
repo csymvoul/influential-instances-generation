@@ -540,7 +540,7 @@ class Model:
             `float`: The precision of the model.
         """
         self.precision = precision_score(self.data.get_y_test(), self.predictions)
-        seld.data.set_dataset_precision(self.precision)
+        self.data.set_dataset_precision(self.precision)
         return self.precision
     
     def get_recall(self) -> float:
