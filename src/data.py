@@ -45,11 +45,23 @@ class Data:
         self.influential_instances = []
         self.dataset_beta = None
         self.dataset_rmse = None
+        self.dataset_accuracy = None
+        self.dataset_precision = None
+        self.dataset_recall = None
+        self.dataset_f1_score = None
         self.dataset_r2 = None
         self.threshold_dfbeta = None
         self.threshold_rmse = None
         self.threshold_r2 = None
+        self.threshold_accuracy = None
+        self.threshold_precision = None
+        self.threshold_recall = None
+        self.threshold_f1_score = None
         self.dfbetas = None
+        self.accuracies = None
+        self.precisions = None
+        self.recalls = None
+        self.f1_scores = None
     
     def get_dataset_file_name(self) -> Datasets:
         """
@@ -531,3 +543,5 @@ class Data:
         """
         self.dataset.hist(bins=50, figsize=(20,15))
         plt.show()
+
+    def 
