@@ -10,19 +10,19 @@ class Instance():
         This class is used to create an instance of the `Instance` class.
     """
 
-    def __init__(self, instance_data: pd.Series) -> None:
+    def __init__(self, instance_index: int) -> None:
         """ 
         Description:
             The constructor of the class `Instance`.
 
         Args: 
             * `self` (`Instance`): The instance of the class `Instance`.
-            * instance_data (`pd.Series`): The instance data.
+            * instance_index (`int`): The instance index.
         
         Returns:
             `None`
         """
-        self.instance_data = instance_data
+        self.instance_index = instance_index
         self.beta = None
         self.rmse = None
         self.r2 = None
@@ -38,20 +38,20 @@ class Instance():
         self.overall_beta = None
         self.dfbeta = None
     
-    def get_instance_data(self) -> pd.Series:
+    def get_instance_data(self) -> int:
         """
-        `get_instance_data` function
+        `get_instance_index` function
 
         Description:
-            This function returns the instance data.
+            This function returns the instance index.
 
         Args:
             `self` (`Instance`): The instance of the class `Instance`.
 
         Returns:
-            instance_data (`pd.Series`): The instance data.
+            instance_data (`int`): The instance data.
         """
-        return self.instance_data
+        return self.instance_index
 
     def calculate_dfbeta(self) -> None:
         """
