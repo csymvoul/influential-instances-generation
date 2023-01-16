@@ -39,7 +39,7 @@ class Data:
         self.y_test = None
         self.y_train = None
         self.y_pred = None
-        self.instances = None
+        self.instances = []
         self.set_instances()
         self.train_test_split()
         self.influential_instances = []
@@ -663,3 +663,19 @@ class Data:
             `float`: The F1 Score of the dataset calculated when trained with all instances.
         """
         return self.dataset_f1_score
+    
+    def append_instance(self, instance) -> None:
+        """
+        `append_instance` function
+
+        Description:
+            This function appends an instance to the instances of the dataset.
+
+        Args:
+            `instance` (`Instance`): The instance to append to the instances of the dataset.
+
+        Returns:
+            `None`
+        """
+        instance = Instance(instance)
+        self.instances.append(instance)
