@@ -1,6 +1,7 @@
 import pandas as pd
 from src.enums import ModelType, ModelName
 from src.data import Data
+from src.instance import Instance
 import numpy as np
 from sklearn.metrics import fbeta_score, mean_squared_error, r2_score, accuracy_score, precision_score, recall_score, f1_score
 
@@ -283,7 +284,7 @@ class Model:
         self.data.train_test_split( test_size = test_size, 
                                     random_state = random_state)
         
-    def fit(self) -> None:
+    def fit(self, X_train:pd.DataFrame=None, y_train:pd.DataFrame=None) -> None:
         """ 
         `fit` function
 
@@ -296,32 +297,36 @@ class Model:
         Returns:
             `None`
         """
+        if X_train is None:
+            X_train = self.data.get_X_train()
+        if y_train is None:
+            y_train = self.data.get_y_train()
         if self.model_name == ModelName.LogisticRegression:
-            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+            self.model.fit(X_train, y_train)
         elif self.model_name == ModelName.KMeans:
-            self.model.fit(self.data.get_X_train, self.data.get_y_train())
+            self.model.fit(X_train, y_train)
         elif self.model_name == ModelName.KNeighborsClassifier:
-            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+            self.model.fit(X_train, y_train)
         elif self.model_name == ModelName.SVC:
-            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+            self.model.fit(X_train, y_train)
         elif self.model_name == ModelName.DecisionTreeClassifier:
-            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+            self.model.fit(X_train, y_train)
         elif self.model_name == ModelName.RandomForestClassifier:
-            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+            self.model.fit(X_train, y_train)
         elif self.model_name == ModelName.GradientBoostingClassifier:
-            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+            self.model.fit(X_train, y_train)
         elif self.model_name == ModelName.XGBClassifier:
-            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+            self.model.fit(X_train, y_train)
         elif self.model_name == ModelName.CatBoostClassifier:
-            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+            self.model.fit(X_train, y_train)
         elif self.model_name == ModelName.MLPClassifier:
-            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+            self.model.fit(X_train, y_train)
         elif self.model_name == ModelName.GaussianNB:
-            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+            self.model.fit(X_train, y_train)
         elif self.model_name == ModelName.LinearDiscriminantAnalysis:
-            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+            self.model.fit(X_train, y_train)
         elif self.model_name == ModelName.QuadraticDiscriminantAnalysis:
-            self.model.fit(self.data.get_X_train(), self.data.get_y_train())
+            self.model.fit(X_train, y_train)
 
     def get_weights(self):
         """
@@ -492,7 +497,7 @@ class Model:
         """
         return self.rmse
 
-    def get_accuracy(self) -> float:
+    def get_accuracy(self, forInstance: False) -> float:
         """
         `get_accuracy` function
 
@@ -500,33 +505,39 @@ class Model:
             This function calculates and returns the accuracy of the model.
         
         Args:
-            `None`
+            `self` (`Model`): The model object.
+            `forInstance` (`bool`): Set this to `True` only if the function is called to calculate the accuracy for an instance.
         
         Returns:
             `float`: The accuracy of the model.
         """
         self.accuracy = accuracy_score(self.data.get_y_test(), self.predictions)
+        if forInstance:
+            return self.accuracy
         self.data.set_dataset_accuracy(self.accuracy)
         return self.accuracy
     
-    def get_f1_score(self) -> float:
+    def get_f1_score(self, forInstance: False) -> float:
         """
-        `get_f1` function
+        `get_f1_score` function
 
         Description:
             This function calculates and returns the f1 score of the model.
         
         Args:
-            `None`
+            `self` (`Model`): The model object.
+            `forInstance` (`bool`): Set this to `True` only if the function is called to calculate the f1 score for an instance.
         
         Returns:
             `float`: The f1 score of the model.
         """
         self.f1_score = f1_score(self.data.get_y_test(), self.predictions)
+        if forInstance:
+            return self.f1_score
         self.data.set_dataset_f1_score(self.f1_score)
         return self.f1_score
 
-    def get_precision(self) -> float:
+    def get_precision(self, forInstance: False) -> float:
         """
         `get_precision` function
 
@@ -534,16 +545,19 @@ class Model:
             This function calculates and returns the precision of the model.
         
         Args:
-            `None`
+            `self` (`Model`): The model object.
+            `forInstance` (`bool`): Set this to `True` only if the function is called to calculate the precision for an instance.
         
         Returns:
             `float`: The precision of the model.
         """
         self.precision = precision_score(self.data.get_y_test(), self.predictions)
+        if forInstance:
+            return self.precision
         self.data.set_dataset_precision(self.precision)
         return self.precision
     
-    def get_recall(self) -> float:
+    def get_recall(self, forInstance: False) -> float:
         """
         `get_recall` function
 
@@ -551,12 +565,15 @@ class Model:
             This function calculates and returns the recall of the model.
         
         Args:
-            `None`
+            `self` (`Model`): The model object.
+            `forInstance` (`bool`): Set this to `True` only if the function is called to calculate the recall for an instance.
         
         Returns:
             `float`: The recall of the model.
         """
         self.recall = recall_score(self.data.get_y_test(), self.predictions)
+        if forInstance:
+            return self.recall
         self.data.set_dataset_recall(self.recall)
         return self.recall
 
@@ -574,14 +591,33 @@ class Model:
             `None`
         """
         self.data.set_instances()
-        for i, instance in self.data.get_dataset().iterrows():
-            self.data.set_dataset(self.data.get_dataset().drop(instance[0]))
-            self.fit()
-            self.predict()
-            if self.model_type == ModelType.BinaryClassification:
-                instance_accuracy = self.get_accuracy()
-                instance_f1_score = self.get_f1_score()
-                instance_precision = self.get_precision()
-                instance_recall = self.get_recall()
-            else:
-                pass
+        cnt = 0
+        for i, instance in self.data.get_X_train().iterrows():
+            print("Training for instance {0}...".format(i))
+            X_train = self.data.get_X_train().copy()
+            X_train.drop(i, axis=0, inplace=True)
+            y_train = self.data.get_y_train().copy()
+            y_train.drop(i, axis=0, inplace=True)
+            # if cnt == 3:
+            #     break
+            # self.data.set_X_train(X_train)
+            self.fit(X_train=X_train, y_train=y_train)
+            self.predict(self.data.get_X_test())
+            if self.type == ModelType.BinaryClassification or self.type == ModelType.MulticlassClassification:
+                instance_accuracy = self.get_accuracy(forInstance=True)
+                instance_f1_score = self.get_f1_score(forInstance=True)
+                instance_precision = self.get_precision(forInstance=True)
+                instance_recall = self.get_recall(forInstance=True)
+                instance = Instance(i)
+                instance.set_accuracy(instance_accuracy)
+                instance.set_f1_score(instance_f1_score)
+                instance.set_precision(instance_precision)
+                instance.set_recall(instance_recall)
+                instance.calculate_accuracy_variance(self.data.get_dataset_accuracy())
+                instance.calculate_f1_score_variance(self.data.get_dataset_f1_score())
+                instance.calculate_precision_variance(self.data.get_dataset_precision())
+                instance.calculate_recall_variance(self.data.get_dataset_recall())
+                print("Is instance {0} influential?\t {1}".format(i, instance.is_influential()))
+                if instance.is_influential():
+                    self.data.set_instance_as_influential(i)
+        print(len(self.data.get_influential_instances()))

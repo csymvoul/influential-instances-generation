@@ -44,18 +44,20 @@ print("\tDataset:\t{0}".format(model.get_data().get_dataset_file_name().value))
 model.get_data().set_instances()
 data = model.get_data()
 
+
+
+# Fit the model
+print("\nFitting the model...")
+model.fit()
+print("Model fitted\n")
+
+# Prediction and evaluation
+model.predict(model.get_data().get_X_test())
+print("Predictions: \n{0}\n".format(model.get_predictions()))
+print("Actual values: \n{0}\n".format(model.get_data().get_y_test().to_numpy()))
+print("Accuracy: {0}".format(model.get_accuracy(forInstance=False)))
+print("Precision: {0}".format(model.get_precision(forInstance=False)))
+print("Recall: {0}".format(model.get_recall(forInstance=False)))
+print("F1 score: {0}".format(model.get_f1_score(forInstance=False)))
+
 model.train_for_influential_instances()
-
-# # Fit the model
-# print("\nFitting the model...")
-# model.fit()
-# print("Model fitted\n")
-
-# # Prediction and evaluation
-# model.predict(model.get_data().get_X_test())
-# print("Predictions: \n{0}\n".format(model.get_predictions()))
-# print("Actual values: \n{0}\n".format(model.get_data().get_y_test().to_numpy()))
-# print("Accuracy: {0}".format(model.get_accuracy()))
-# print("Precision: {0}".format(model.get_precision()))
-# print("Recall: {0}".format(model.get_recall()))
-# print("F1 score: {0}".format(model.get_f1_score()))

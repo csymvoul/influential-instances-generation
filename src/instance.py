@@ -17,12 +17,13 @@ class Instance():
 
         Args: 
             * `self` (`Instance`): The instance of the class `Instance`.
-            * instance_index (`int`): The instance index.
+            * `instance_index` (`int`): The instance's index.
         
         Returns:
             `None`
         """
         self.instance_index = instance_index
+        self.instance_score = None
         self.beta = None
         self.rmse = None
         self.r2 = None
@@ -30,6 +31,10 @@ class Instance():
         self.precision = None
         self.recall = None
         self.f1_score = None
+        self.dataset_accuracy = None
+        self.dataset_precision = None
+        self.dataset_recall = None
+        self.dataset_f1_score = None
         self.accuracy_variance = None
         self.precision_variance = None
         self.recall_variance = None
@@ -37,8 +42,9 @@ class Instance():
         self.weights = None
         self.overall_beta = None
         self.dfbeta = None
+        self.influential = False
     
-    def get_instance_data(self) -> int:
+    def get_instance_index(self) -> int:
         """
         `get_instance_index` function
 
@@ -49,7 +55,7 @@ class Instance():
             `self` (`Instance`): The instance of the class `Instance`.
 
         Returns:
-            instance_data (`int`): The instance data.
+            instance_index (`int`): The instance's index.
         """
         return self.instance_index
 
@@ -213,7 +219,7 @@ class Instance():
 
         Args:
             `self` (`Instance`): The instance of the class `Instance`.
-            accuracy (`float`): The accuracy value for each instance in the dataset.
+            `accuracy` (`float`): The accuracy value for each instance in the dataset.
 
         Returns:
             `None`
@@ -229,7 +235,7 @@ class Instance():
 
         Args:
             `self` (`Instance`): The instance of the class `Instance`.
-            precision (`float`): The precision value for each instance in the dataset.
+            `precision` (`float`): The precision value for each instance in the dataset.
 
         Returns:
             `None`
@@ -245,7 +251,7 @@ class Instance():
 
         Args:
             `self` (`Instance`): The instance of the class `Instance`.
-            recall (`float`): The recall value for each instance in the dataset.
+            `recall` (`float`): The recall value for each instance in the dataset.
 
         Returns:
             `None`
@@ -261,7 +267,7 @@ class Instance():
 
         Args:
             `self` (`Instance`): The instance of the class `Instance`.
-            f1_score (`float`): The f1_score value for each instance in the dataset.
+            `f1_score` (`float`): The f1_score value for each instance in the dataset.
 
         Returns:
             `None`
@@ -277,11 +283,12 @@ class Instance():
 
         Args:
             `self` (`Instance`): The instance of the class `Instance`.
-            dataset_accuracy (`float`): The accuracy value for the dataset.
+            `dataset_accuracy` (`float`): The accuracy value for the dataset.
 
         Returns:
             `None`
         """
+        self.dataset_accuracy = dataset_accuracy
         self.accuracy_variance = self.accuracy - dataset_accuracy
     
     def calculate_precision_variance(self, dataset_precision: float) -> None:
@@ -293,11 +300,12 @@ class Instance():
 
         Args:
             `self` (`Instance`): The instance of the class `Instance`.
-            dataset_precision (`float`): The precision value for the dataset.
+            `dataset_precision` (`float`): The precision value for the dataset.
 
         Returns:
             `None`
         """
+        self.dataset_precision = dataset_precision
         self.precision_variance = self.precision - dataset_precision
     
     def calculate_recall_variance(self, dataset_recall: float) -> None:
@@ -309,11 +317,12 @@ class Instance():
 
         Args:
             `self` (`Instance`): The instance of the class `Instance`.
-            dataset_recall (`float`): The recall value for the dataset.
+            `dataset_recall` (`float`): The recall value for the dataset.
 
         Returns:
             `None`
         """
+        self.dataset_recall = dataset_recall
         self.recall_variance = self.recall - dataset_recall
     
     def calculate_f1_score_variance(self, dataset_f1_score: float) -> None:
@@ -325,11 +334,12 @@ class Instance():
 
         Args:
             `self` (`Instance`): The instance of the class `Instance`.
-            dataset_f1_score (`float`): The f1_score value for the dataset.
+            `dataset_f1_score` (`float`): The f1_score value for the dataset.
 
         Returns:
             `None`
         """
+        self.dataset_f1_score = dataset_f1_score
         self.f1_score_variance = self.f1_score - dataset_f1_score
     
     def get_accuracy_variance(self) -> float:
@@ -352,7 +362,7 @@ class Instance():
         `get_precision_variance` function
 
         Description:
-            This function returns the precision variance value for each instance in the dataset.
+            This function caclulates and returns the precision variance value for each instance in the dataset.
 
         Args:
             `self` (`Instance`): The instance of the class `Instance`.
@@ -392,3 +402,21 @@ class Instance():
         """
         return self.f1_score_variance
     
+    def is_influential(self) -> bool:
+        """
+        `is_influential` function
+
+        Description:
+            This function checks if instance is influential and returns the outcome.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+
+        Returns:
+            influential (`bool`): Whether the instance is influential or not.
+        """
+        self.instance_score = abs(self.accuracy_variance) + abs(self.precision_variance) + abs(self.recall_variance) + abs(self.f1_score_variance)
+        print("Instance score: \t\t {0}".format(self.instance_score))
+        if self.instance_score > 0:
+            self.influential = True
+        return self.influential
