@@ -39,9 +39,10 @@ class Data:
         self.y_test = None
         self.y_train = None
         self.y_pred = None
-        self.instances = None
+        self.instances = []
         self.set_instances()
         self.train_test_split()
+        self.dataset_for_influential_check = None
         self.influential_instances = []
         self.dataset_beta = None
         self.dataset_rmse = None
@@ -95,8 +96,11 @@ class Data:
             `None`
         """
         self.dataset_file_name = dataset_file_name
-        self.path = 'datasets/'+self.dataset_file_name.value+'.csv'
-        self.dataset = pd.read_csv(self.path)
+        try:
+            self.path = 'datasets/'+self.dataset_file_name.value+'.csv'
+            self.dataset = pd.read_csv(self.path)
+        except:
+            raise ValueError('Invalid dataset file name.')
 
     def get_dataset(self) -> pd.DataFrame:
         """
@@ -268,6 +272,21 @@ class Data:
         """
         return self.y
 
+    def set_X_train(self, X_train: pd.DataFrame) -> None:
+        """
+        `set_X_train` function
+
+        Description:
+            This function sets the training set.
+
+        Args:
+            `X_train` (`pandas.DataFrame`): The training set.
+
+        Returns:
+            `None`
+        """
+        self.X_train = X_train
+
     def get_X_train(self) -> pd.DataFrame:
         """
         `get_X_train` function
@@ -373,7 +392,7 @@ class Data:
         """
         self.instances = []
         for i in range(len(self.dataset)):
-            self.instances.append(Instance(instance_data=self.dataset.iloc[i]))
+            self.instances.append(Instance(instance_index=i))
 
     def get_instances(self) -> list[Instance]:
         """
@@ -418,8 +437,7 @@ class Data:
         Returns:
             `None`
         """
-        influential_instance = InfluentialInstance(instance=self.instances[index])
-        self.influential_instances.append(influential_instance)
+        self.influential_instances.append(index)
 
     def set_dataset_rmse(self, dataset_rmse:float) -> None:
         """
@@ -664,4 +682,17 @@ class Data:
         """
         return self.dataset_f1_score
     
-    
+    def get_influential_instances(self) -> list:
+        """
+        `get_influential_instances` function
+
+        Description:
+            This function returns the influential instances of the dataset.
+
+        Args:
+            `None`
+
+        Returns:
+            `list`: The influential instances of the dataset.
+        """
+        return self.influential_instances
