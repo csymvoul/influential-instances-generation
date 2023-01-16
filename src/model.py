@@ -578,7 +578,7 @@ class Model:
             self.data.set_dataset(self.data.get_dataset().drop(instance[0]))
             self.fit()
             self.predict()
-            if self.model_type == ModelType.Classification:
+            if self.model_type == ModelType.BinaryClassification:
                 instance_accuracy = self.get_accuracy()
                 instance_f1_score = self.get_f1_score()
                 instance_precision = self.get_precision()
