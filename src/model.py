@@ -582,7 +582,11 @@ class Model:
         `train_for_influential_instances` function
 
         Description:
-            This function trains the dataset without one row each time.
+            This function trains the dataset without one row each time, and then predicts the test set. 
+            
+            This is done for each row in the dataset. 
+            
+            The accuracy, precision, recall and f1 score of each deducted instance is then calculated and stored in the corresponding `Instance` of the `Data` object.
 
         Args:
             `None`
@@ -598,9 +602,6 @@ class Model:
             X_train.drop(i, axis=0, inplace=True)
             y_train = self.data.get_y_train().copy()
             y_train.drop(i, axis=0, inplace=True)
-            # if cnt == 3:
-            #     break
-            # self.data.set_X_train(X_train)
             self.fit(X_train=X_train, y_train=y_train)
             self.predict(self.data.get_X_test())
             if self.type == ModelType.BinaryClassification or self.type == ModelType.MulticlassClassification:
@@ -617,7 +618,6 @@ class Model:
                 instance.calculate_f1_score_variance(self.data.get_dataset_f1_score())
                 instance.calculate_precision_variance(self.data.get_dataset_precision())
                 instance.calculate_recall_variance(self.data.get_dataset_recall())
-                print("Is instance {0} influential?\t {1}".format(i, instance.is_influential()))
                 if instance.is_influential():
                     self.data.set_instance_as_influential(i)
         print(len(self.data.get_influential_instances()))

@@ -415,6 +415,10 @@ class Instance():
         Returns:
             influential (`bool`): Whether the instance is influential or not.
         """
+        print("Accuracy variance: \t\t {0}".format(self.accuracy_variance))
+        print("Precision variance: \t\t {0}".format(self.precision_variance))
+        print("Recall variance: \t\t {0}".format(self.recall_variance))
+        print("F1 score variance: \t\t {0}".format(self.f1_score_variance))
         self.instance_score = abs(self.accuracy_variance) + abs(self.precision_variance) + abs(self.recall_variance) + abs(self.f1_score_variance)
         print("Instance score: \t\t {0}".format(self.instance_score))
         if self.instance_score > 0:

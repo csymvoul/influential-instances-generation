@@ -695,6 +695,4 @@ class Data:
         Returns:
             `list`: The influential instances of the dataset.
         """
-        for instance in self.instances:
-            if instance.is_influential():
-                self.influential_instances.append(instance.get_instance_index())
+        return self.influential_instances
