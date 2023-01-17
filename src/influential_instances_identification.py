@@ -31,3 +31,15 @@ class InfluentialInstancesIdentification():
             list: A list of influential instances.
         """
         return self.influential_instances_list
+
+    def identify_influential_instances_list(self) -> None:
+        """
+        Description: 
+            Identifies the influential instances out of the `potential_influential_instances` list. First, it uses the K-Means algorithm to 
+
+        Args:
+            `None`
+        
+        Returns:
+            `None`
+        """
