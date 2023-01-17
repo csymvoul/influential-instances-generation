@@ -13,7 +13,7 @@ class InfluentialInstance(Instance):
     def __init__(self) -> None:
         """ 
         Description:
-            The constructor of the class `InfluentialInstance`.
+            The constructor of the `InfluentialInstance` class.
 
         Args: 
             * `self` (`InfluentialInstance`): The instance of the class `InfluentialInstance`.

@@ -16,7 +16,7 @@ class Model:
     def __init__(self, data: Data = Data(), model_name: ModelName = ModelName.LogisticRegression) -> None:
         """ 
         Description:
-            The constructor of the class `Model`.
+            The constructor of the `Model` class.
 
         Args: 
             * model_name (`ModelName`): The name of the model. 

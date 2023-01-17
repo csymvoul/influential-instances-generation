@@ -4,7 +4,7 @@ import numpy as np
 
 class Instance():
     """
-    The `Instance` class
+    The `Instance` class.
 
     Description:
         This class is used to create an instance of the `Instance` class.
@@ -13,7 +13,7 @@ class Instance():
     def __init__(self, instance_index: int) -> None:
         """ 
         Description:
-            The constructor of the class `Instance`.
+            The constructor of the `Instance` class.
 
         Args: 
             * `self` (`Instance`): The instance of the class `Instance`.

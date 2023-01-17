@@ -15,7 +15,7 @@ class Datasets(Enum):
 
 class ModelName(Enum):
     """
-    `ModelName` enum class
+    `ModelName` enum class. An `Enum` class that contains the names of the available models.
 
     Args:
         Enum (`Enum`): The `ModelName` `Enum` class.
@@ -37,7 +37,7 @@ class ModelName(Enum):
 
 class ModelType(Enum):
     """
-    `ModelType` enum class
+    `ModelType` enum class. An `Enum` class that contains the types of the available model types.
 
     Args:
         Enum (`Enum`): The `ModelType` `Enum` class.
