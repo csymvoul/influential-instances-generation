@@ -18,7 +18,7 @@ class Data:
     def __init__(self, dataset_file_name: Datasets = Datasets.BreastCancer) -> None:
         """ 
         Description:
-            The constructor of the class `Data`.
+            The constructor of the `Data` class.
 
         Args: 
             * dataset_file_name (`Datasets`): 
