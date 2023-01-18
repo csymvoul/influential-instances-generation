@@ -84,6 +84,6 @@ final_results.append(model.get_f1_score(forInstance=False))
 
 print("\n\n\t\tInitial results: \t\t Final results:")
 print("Accuracy: \t{0} \t\t {1}".format(first_results[0], final_results[0]))
-print("Precision: \t{0} \t\t\t\t {1}".format(first_results[1], final_results[1]))
+print("Precision: \t{0} \t\t {1}".format(first_results[1], final_results[1]))
 print("Recall: \t{0} \t\t {1}".format(first_results[2], final_results[2]))
 print("F1 score: \t{0} \t\t {1}".format(first_results[3], final_results[3]))

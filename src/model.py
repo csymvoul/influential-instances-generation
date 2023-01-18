@@ -599,6 +599,7 @@ class Model:
         """
         self.data.set_instances()
         for i, instance in self.data.get_X_train().iterrows():
+            print(f"Training for instance {i}...")
             X_train = self.data.get_X_train().copy()
             X_train.drop(i, axis=0, inplace=True)
             y_train = self.data.get_y_train().copy()
