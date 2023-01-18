@@ -7,6 +7,7 @@ from src.enums import Datasets
 from sklearn.model_selection import train_test_split
 from src.instance import Instance
 from src.influential_instance import InfluentialInstance
+from src.influential_instances_identification import InfluentialInstancesIdentification
 
 class Data:
     """
@@ -63,6 +64,7 @@ class Data:
         self.precisions = None
         self.recalls = None
         self.f1_scores = None
+        self.influential_instances_identification = None
     
     def get_dataset_file_name(self) -> Datasets:
         """
@@ -681,7 +683,7 @@ class Data:
             `float`: The F1 Score of the dataset calculated when trained with all instances.
         """
         return self.dataset_f1_score
-    
+
     def get_influential_instances(self) -> list:
         """
         `get_influential_instances` function

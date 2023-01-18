@@ -2,6 +2,7 @@ import pandas as pd
 from src.enums import ModelType, ModelName
 from src.data import Data
 from src.instance import Instance
+from src.influential_instances_identification import InfluentialInstancesIdentification
 import numpy as np
 from sklearn.metrics import fbeta_score, mean_squared_error, r2_score, accuracy_score, precision_score, recall_score, f1_score
 
@@ -51,6 +52,7 @@ class Model:
         self.roc_auc_score = None
         self.confusion_matrix = None
         self.predictions = None
+        self.influential_instances_identification = None
 
     def set_model(self, model_name: ModelName) -> None:
         """
@@ -595,7 +597,6 @@ class Model:
             `None`
         """
         self.data.set_instances()
-        cnt = 0
         for i, instance in self.data.get_X_train().iterrows():
             print("Training for instance {0}...".format(i))
             X_train = self.data.get_X_train().copy()
@@ -620,4 +621,22 @@ class Model:
                 instance.calculate_recall_variance(self.data.get_dataset_recall())
                 if instance.is_influential():
                     self.data.set_instance_as_influential(i)
-        print(len(self.data.get_influential_instances()))
+        self.__identify_all_influential_instances()
+ 
+    def __identify_all_influential_instances(self) -> None:
+        """
+        `identify_influential_instances` function
+
+        Description:
+            This function identifies the influential instances in the dataset and stores them in the `Data` object.
+
+        Args:
+            `None`
+
+        Returns:
+            `None`
+        """
+        self.influential_instances_identification = InfluentialInstancesIdentification(self.data.get_influential_instances(), self.data.get_dataset())
+        self.influential_instances_identification.identify_influential_instances()
+        # self.data.set_influential_instances()
+

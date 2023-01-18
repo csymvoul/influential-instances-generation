@@ -1,5 +1,7 @@
 import pandas as pd
-
+from sklearn.metrics.pairwise import manhattan_distances as md
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
 class InfluentialInstancesIdentification():
     """
@@ -55,6 +57,9 @@ class InfluentialInstancesIdentification():
             Returns:
                 `None`
         """
+        print("Identifying the influential instances...")
+        self.__set_influential_instances()
+        self.__set_threshold_distance()
         for i, instance in self.dataset.iterrows():
             if i not in self.influential_instances_indices:
                 # Calculate the distance to the other instances in the `influential_instances_indices
@@ -65,7 +70,7 @@ class InfluentialInstancesIdentification():
     def __set_influential_instances(self) -> None:
         """
             Description: 
-                This function sets the influential instances.
+                This function sets the influential instances from the indices in the `influential_instances_indices`.
 
             Algorithm description:
                 * Iterate over the `influential_instances_indices`.
@@ -96,6 +101,14 @@ class InfluentialInstancesIdentification():
             Returns:
                 `None`
         """
+        print("Setting the threshold distance...")
+        instances = []
+        for i, instance in self.influential_instances.iterrows():
+            for j, instance2 in self.influential_instances.iterrows():
+                if i != j:
+                    # Calculate the Manhattan distance
+                    # Set the threshold distance to the average of the distances
+                    instances.append(md(instance.values.reshape(1, -1), instance2.values.reshape(1, -1))[0][0])
         
-
-
+        self.threshold_distance = sum(instances) / len(instances)
+        print("Threshold distance: \t\t", self.threshold_distance)
