@@ -53,6 +53,7 @@ class Model:
         self.confusion_matrix = None
         self.predictions = None
         self.influential_instances_identification = None
+        self.influential_instances = None
 
     def set_model(self, model_name: ModelName) -> None:
         """
@@ -598,7 +599,6 @@ class Model:
         """
         self.data.set_instances()
         for i, instance in self.data.get_X_train().iterrows():
-            print("Training for instance {0}...".format(i))
             X_train = self.data.get_X_train().copy()
             X_train.drop(i, axis=0, inplace=True)
             y_train = self.data.get_y_train().copy()
@@ -638,5 +638,22 @@ class Model:
         """
         self.influential_instances_identification = InfluentialInstancesIdentification(self.data.get_influential_instances(), self.data.get_dataset())
         self.influential_instances_identification.identify_influential_instances()
-        # self.data.set_influential_instances()
+    
+    def fit_with_influential_instances(self):
+        """
+        `fit_with_influential_instances` function
 
+        Description:
+            This function trains the model with the influential instances only.
+
+        Args:
+            `None`
+
+        Returns:
+            `None`
+        """
+        print("Training with influential instances...")
+        self.influential_instances = self.influential_instances_identification.get_influential_instances()
+        self.data.set_X_train(self.influential_instances.drop(self.data.get_y_train().name, axis=1))
+        self.data.set_y_train(self.influential_instances[self.data.get_y_train().name])
+        self.fit(self.data.get_X_train(), self.data.get_y_train())

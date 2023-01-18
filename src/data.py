@@ -289,6 +289,21 @@ class Data:
         """
         self.X_train = X_train
 
+    def set_y_train(self, y_train: pd.DataFrame) -> None:
+        """
+        `set_y_train` function
+
+        Description:
+            This function sets the training set.
+
+        Args:
+            `y_train` (`pandas.DataFrame`): The training set.
+
+        Returns:
+            `None`
+        """
+        self.y_train = y_train
+
     def get_X_train(self) -> pd.DataFrame:
         """
         `get_X_train` function

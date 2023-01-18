@@ -22,10 +22,9 @@ class InfluentialInstancesIdentification():
                 `None`
         """
         self.influential_instances_indices = influential_instances_indices
-        self.influential_instances = pd.DataFrame()
+        self.influential_instances = None
         self.dataset = dataset
         self.threshold_distance = None
-        self.__set_influential_instances()
 
     def get_influential_instances_indices(self) -> list:
         """
@@ -60,12 +59,16 @@ class InfluentialInstancesIdentification():
         print("Identifying the influential instances...")
         self.__set_influential_instances()
         self.__set_threshold_distance()
+        print("Current number of influential instances: \t", len(self.influential_instances_indices))
         for i, instance in self.dataset.iterrows():
             if i not in self.influential_instances_indices:
                 # Calculate the distance to the other instances in the `influential_instances_indices
                 # If the distance is smaller than a certain threshold, then the instance is considered to be influential
                 # Add the instance's index to the `influential_instances_indices`
-                pass
+                if self.threshold_distance < md(instance.values.reshape(1, -1), self.influential_instances.values).min():
+                    self.influential_instances_indices.append(i)
+        print("Final number of influential instances: \t\t", len(self.influential_instances_indices))
+        self.__set_influential_instances()
 
     def __set_influential_instances(self) -> None:
         """
@@ -83,8 +86,10 @@ class InfluentialInstancesIdentification():
             Returns:
                 `None`
         """
+        self.influential_instances = pd.DataFrame()
         for index in self.influential_instances_indices:
             self.influential_instances = self.influential_instances.append(self.dataset.iloc[index])
+        print("Number of influential instances: \t\t", len(self.influential_instances_indices))
 
     def __set_threshold_distance(self) -> None:
         """
@@ -112,3 +117,16 @@ class InfluentialInstancesIdentification():
         
         self.threshold_distance = sum(instances) / len(instances)
         print("Threshold distance: \t\t", self.threshold_distance)
+
+    def get_influential_instances(self) -> pd.DataFrame:
+        """
+            Description: 
+                Returns the influential instances.
+
+            Args:
+                `None`
+            
+            Returns:
+                pd.DataFrame: The influential instances.
+        """
+        return self.influential_instances
