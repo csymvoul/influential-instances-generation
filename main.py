@@ -7,7 +7,7 @@ import time
 
 args = ArgsParser().parse_args()
 
-print("Arguments:")
+print("\nArguments:")
 print("\tData:\t{0}".format(args.data))
 print("\tModel:\t{0}".format(args.model))
 
