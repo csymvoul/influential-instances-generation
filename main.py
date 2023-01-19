@@ -8,8 +8,8 @@ import time
 args = ArgsParser().parse_args()
 
 print("Arguments:")
-print("\tdata:\t{0}".format(args.data))
-print("\tmodel:\t{0}".format(args.model))
+print("\tData:\t{0}".format(args.data))
+print("\tModel:\t{0}".format(args.model))
 
 try:
     # Dataset specified 
@@ -57,19 +57,12 @@ print("Model fitted\n")
 first_results = []
 # Prediction and evaluation
 model.predict(model.get_data().get_X_test())
-# print("Predictions: \n{0}\n".format(model.get_predictions()))
-# print("Actual values: \n{0}\n".format(model.get_data().get_y_test().to_numpy()))
-# print("Accuracy: {0}".format(model.get_accuracy(forInstance=False)))
-# print("Precision: {0}".format(model.get_precision(forInstance=False)))
-# print("Recall: {0}".format(model.get_recall(forInstance=False)))
-# print("F1 score: {0}".format(model.get_f1_score(forInstance=False)))
 first_results.append(model.get_accuracy(forInstance=False))
 first_results.append(model.get_precision(forInstance=False))
 first_results.append(model.get_recall(forInstance=False))
 first_results.append(model.get_f1_score(forInstance=False))
 first_results.append(model.get_data().get_X_train().shape[0])
 first_results.append(end_time - start_time)
-
 
 found_ii = model.train_for_influential_instances()
 if found_ii:
@@ -79,12 +72,6 @@ if found_ii:
     final_results = []
     # Prediction and evaluation
     model.predict(model.get_data().get_X_test())
-    # print("Predictions: \n{0}\n".format(model.get_predictions()))
-    # print("Actual values: \n{0}\n".format(model.get_data().get_y_test().to_numpy()))
-    # print("Accuracy: {0}".format(model.get_accuracy(forInstance=False)))
-    # print("Precision: {0}".format(model.get_precision(forInstance=False)))
-    # print("Recall: {0}".format(model.get_recall(forInstance=False)))
-    # print("F1 score: {0}".format(model.get_f1_score(forInstance=False)))
     final_results.append(model.get_accuracy(forInstance=False))
     final_results.append(model.get_precision(forInstance=False))
     final_results.append(model.get_recall(forInstance=False))

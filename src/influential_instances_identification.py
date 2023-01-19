@@ -93,6 +93,8 @@ class InfluentialInstancesIdentification():
         """
         self.influential_instances = pd.DataFrame()
         for index in self.influential_instances_indices:
+            # Get the instance from the `dataset`
+            # Add the instance to the `influential_instances`
             self.influential_instances = self.influential_instances.append(self.dataset.iloc[index])
         print("Number of influential instances: \t\t", len(self.influential_instances_indices))
 
