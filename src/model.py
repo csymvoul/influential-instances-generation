@@ -3,6 +3,7 @@ from src.enums import ModelType, ModelName
 from src.data import Data
 from src.instance import Instance
 from src.influential_instances_identification import InfluentialInstancesIdentification
+from src.cleaning import clean_data
 import numpy as np
 from sklearn.metrics import fbeta_score, mean_squared_error, r2_score, accuracy_score, precision_score, recall_score, f1_score
 
@@ -599,7 +600,7 @@ class Model:
         """
         self.data.set_instances()
         for i, instance in self.data.get_X_train().iterrows():
-            print(f"Training for instance {i}...")
+            print(f"Training for instance {i}...", end="\r", flush=True)
             X_train = self.data.get_X_train().copy()
             X_train.drop(i, axis=0, inplace=True)
             y_train = self.data.get_y_train().copy()

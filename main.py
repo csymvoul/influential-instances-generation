@@ -8,8 +8,8 @@ import time
 args = ArgsParser().parse_args()
 
 print("Arguments:")
-print("\tdata:\t{0}".format(args.data))
-print("\tmodel:\t{0}".format(args.model))
+print("\tData:\t{0}".format(args.data))
+print("\tModel:\t{0}".format(args.model))
 
 try:
     # Dataset specified 
