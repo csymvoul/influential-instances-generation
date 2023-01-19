@@ -64,7 +64,6 @@ first_results.append(model.get_f1_score(forInstance=False))
 first_results.append(model.get_data().get_X_train().shape[0])
 first_results.append(end_time - start_time)
 
-
 found_ii = model.train_for_influential_instances()
 if found_ii:
     start_time = time.time()
