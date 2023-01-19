@@ -7,7 +7,7 @@ import time
 
 args = ArgsParser().parse_args()
 
-print("Arguments:")
+print("\nArguments:")
 print("\tData:\t{0}".format(args.data))
 print("\tModel:\t{0}".format(args.model))
 
@@ -45,8 +45,6 @@ print("\tDataset:\t{0}".format(model.get_data().get_dataset_file_name().value))
 model.get_data().set_instances()
 data = model.get_data()
 
-
-
 # Fit the model
 print("\nFitting the model...")
 start_time = time.time()
@@ -78,7 +76,6 @@ if found_ii:
     final_results.append(model.get_f1_score(forInstance=False))
     final_results.append(model.get_data().get_X_train().shape[0])
     final_results.append(end_time - start_time)
-
 
     print("\n\n\t\t\tInitial results: \t\t Final results:")
     print("Accuracy: \t\t{0} \t\t\t\t {1}".format(round(first_results[0], 3), round(final_results[0], 3)))
