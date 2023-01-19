@@ -54,21 +54,26 @@ class InfluentialInstancesIdentification():
                 `None`
             
             Returns:
-                `None`
+                `bool`: `True` if the influential instances were identified, `False` otherwise.
         """
         print("Identifying the influential instances...")
-        self.__set_influential_instances()
-        self.__set_threshold_distance()
-        print("Current number of influential instances: \t", len(self.influential_instances_indices))
-        for i, instance in self.dataset.iterrows():
-            if i not in self.influential_instances_indices:
-                # Calculate the distance to the other instances in the `influential_instances_indices
-                # If the distance is smaller than a certain threshold, then the instance is considered to be influential
-                # Add the instance's index to the `influential_instances_indices`
-                if self.threshold_distance < md(instance.values.reshape(1, -1), self.influential_instances.values).min():
-                    self.influential_instances_indices.append(i)
-        print("Final number of influential instances: \t\t", len(self.influential_instances_indices))
-        self.__set_influential_instances()
+        if len(self.influential_instances_indices) != 0:
+            self.__set_influential_instances()
+            self.__set_threshold_distance()
+            print("Current number of influential instances: \t", len(self.influential_instances_indices))
+            for i, instance in self.dataset.iterrows():
+                if i not in self.influential_instances_indices:
+                    # Calculate the distance to the other instances in the `influential_instances_indices
+                    # If the distance is smaller than a certain threshold, then the instance is considered to be influential
+                    # Add the instance's index to the `influential_instances_indices`
+                    if self.threshold_distance < md(instance.values.reshape(1, -1), self.influential_instances.values).min():
+                        self.influential_instances_indices.append(i)
+            print("Final number of influential instances: \t\t", len(self.influential_instances_indices))
+            self.__set_influential_instances()
+            return True
+        else:
+            print("No influential instances were identified.")
+            return False
 
     def __set_influential_instances(self) -> None:
         """
@@ -107,16 +112,16 @@ class InfluentialInstancesIdentification():
                 `None`
         """
         print("Setting the threshold distance...")
-        instances = []
+        distances = []
         for i, instance in self.influential_instances.iterrows():
             for j, instance2 in self.influential_instances.iterrows():
                 if i != j:
                     # Calculate the Manhattan distance
                     # Set the threshold distance to the average of the distances
-                    instances.append(md(instance.values.reshape(1, -1), instance2.values.reshape(1, -1))[0][0])
+                    distances.append(md(instance.values.reshape(1, -1), instance2.values.reshape(1, -1))[0][0])
         
-        self.threshold_distance = sum(instances) / len(instances)
-        print("Threshold distance: \t\t", self.threshold_distance)
+        self.threshold_distance = sum(distances) / len(distances)
+        print("Threshold distance: \t\t\t\t", round(self.threshold_distance, 4))
 
     def get_influential_instances(self) -> pd.DataFrame:
         """

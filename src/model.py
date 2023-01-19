@@ -595,7 +595,7 @@ class Model:
             `None`
 
         Returns:
-            `None`
+            `bool`: `True` if the influential instances were found, `False` otherwise.
         """
         self.data.set_instances()
         for i, instance in self.data.get_X_train().iterrows():
@@ -622,7 +622,8 @@ class Model:
                 instance.calculate_recall_variance(self.data.get_dataset_recall())
                 if instance.is_influential():
                     self.data.set_instance_as_influential(i)
-        self.__identify_all_influential_instances()
+        influential_instances_found = self.__identify_all_influential_instances()
+        return influential_instances_found
  
     def __identify_all_influential_instances(self) -> None:
         """
@@ -635,10 +636,11 @@ class Model:
             `None`
 
         Returns:
-            `None`
+            `bool`: `True` if influential instances were found, `False` otherwise.
         """
         self.influential_instances_identification = InfluentialInstancesIdentification(self.data.get_influential_instances(), self.data.get_dataset())
-        self.influential_instances_identification.identify_influential_instances()
+        influential_instances_found = self.influential_instances_identification.identify_influential_instances()
+        return influential_instances_found
     
     def fit_with_influential_instances(self):
         """
