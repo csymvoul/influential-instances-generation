@@ -8,8 +8,8 @@ import time
 args = ArgsParser().parse_args()
 
 print("\nArguments:")
-print("\tData:\t{0}".format(args.data))
-print("\tModel:\t{0}".format(args.model))
+print("\tData:\t\t{0}".format(args.data))
+print("\tModel:\t\t{0}".format(args.model))
 
 try:
     # Dataset specified 
@@ -50,8 +50,7 @@ print("\nFitting the model...")
 start_time = time.time()
 model.fit()
 end_time = time.time()
-print("Model fitted\n")
-
+print("Model fitted.\n")
 first_results = []
 # Prediction and evaluation
 model.predict(model.get_data().get_X_test())

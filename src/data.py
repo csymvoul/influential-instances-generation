@@ -135,7 +135,7 @@ class Data:
             `None`
         """
         self.dataset = self.dataset.dropna()
-        self.dataset = self.dataset.drop_duplicates()
+        # self.dataset = self.dataset.drop_duplicates()
 
         if self.dataset_file_name == Datasets.BreastCancer:
             self.dataset.drop(['id'], axis=1, inplace=True)
