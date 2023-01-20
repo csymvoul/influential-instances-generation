@@ -51,7 +51,6 @@ start_time = time.time()
 model.fit()
 end_time = time.time()
 print("Model fitted.\n")
-
 first_results = []
 # Prediction and evaluation
 model.predict(model.get_data().get_X_test())
