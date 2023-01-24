@@ -14,6 +14,7 @@ First, you need to install the dependencies / libraries using `pip`. All necessa
 ## Execution
 
 The `main.py` file should be executed. There are two (optional) arguments that can be inserted: 
+
     * `--data` where the argument should be either of the available dataset names, found in the `Datasets` enum in the `src/enums.py` file. This argument sets the dataset to be used. 
         * Default dataset if the argument is not set, or not found is the `BreastCancer` dataset.
     * `--model` where the argument should be either of the available model names, found in the `ModelName` enum in the `src/enums.py` file. This argument sets the model to be used. 
