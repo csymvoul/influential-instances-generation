@@ -28,7 +28,7 @@ The results of the program include information related to the initial mdoel trai
 
 Below the results of the program can be found: 
 
-/opt/homebrew/bin/python3 /Users/csymvoul/Projects/phd/influential_instances_service/main.py --data BreastCancer --model RandomForestClassifier
+    /opt/homebrew/bin/python3 /influential_instances_service/main.py --data BreastCancer --model RandomForestClassifier
 
 ```
 Arguments:
