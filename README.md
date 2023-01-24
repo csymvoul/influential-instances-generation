@@ -9,7 +9,7 @@ Our strategy includes 5 main steps; (i) the initial training of the ML / DL algo
 
 First, you need to install the dependencies / libraries using `pip`. All necessary libraries are listedin the `requirements.txt` file, found in the root. By executing the following command, all dependencies will be installed: 
 
-        pip3 install -r requirements.txt
+    pip3 install -r requirements.txt
 
 ## Execution
 
@@ -31,35 +31,35 @@ Below the results of the program can be found:
 /opt/homebrew/bin/python3 /Users/csymvoul/Projects/phd/influential_instances_service/main.py --data BreastCancer --model RandomForestClassifier
 
 ```
-    Arguments:
-            Data:           BreastCancer
-            Model:          RandomForestClassifier
+Arguments:
+        Data:           BreastCancer
+        Model:          RandomForestClassifier
 
-    Information:
-            Model type:     MulticlassClassification
-            Model name:     RandomForestClassifier
-            Model:          <class 'sklearn.ensemble._forest.RandomForestClassifier'>
-            Dataset:        BreastCancer
+Information:
+        Model type:     MulticlassClassification
+        Model name:     RandomForestClassifier
+        Model:          <class 'sklearn.ensemble._forest.RandomForestClassifier'>
+        Dataset:        BreastCancer
 
-    Fitting the model...
-    Model fitted.
+Fitting the model...
+Model fitted.
 
-    Identifying the influential instances...
-    Number of influential instances:                 57
-    Setting the threshold distance...
-    Threshold distance:                              978.6299
-    Current number of influential instances:         57
-    Final number of influential instances:           68
-    Number of influential instances:                 68
-    Training with influential instances...
+Identifying the influential instances...
+Number of influential instances:                 57
+Setting the threshold distance...
+Threshold distance:                              978.6299
+Current number of influential instances:         57
+Final number of influential instances:           68
+Number of influential instances:                 68
+Training with influential instances...
 
 
-                            Initial results:                 Final results:
-    Accuracy:               0.965                            0.965
-    Precision:              0.976                            1.0
-    Recall:                 0.93                             0.907
-    F1 score:               0.952                            0.951
-    Dataset size:           455                              68
-    Time:                   0.083                            0.039
-    Dataset decrease:       85.05%
+                        Initial results:                 Final results:
+Accuracy:               0.965                            0.965
+Precision:              0.976                            1.0
+Recall:                 0.93                             0.907
+F1 score:               0.952                            0.951
+Dataset size:           455                              68
+Time:                   0.083                            0.039
+Dataset decrease:       85.05%
 ```
