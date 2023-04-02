@@ -12,6 +12,7 @@ class Datasets(Enum):
     XD6 = 'XD6'
     Mifem = 'Mifem'
     Corral = 'Corral'
+    WineQuality = 'WineQuality'
 
 class ModelName(Enum):
     """

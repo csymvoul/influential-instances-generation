@@ -224,6 +224,9 @@ class Data:
         elif self.dataset_file_name == Datasets.XD6:
             self.X = self.dataset.drop('Class', axis=1)
             self.y = self.dataset['Class']
+        elif self.dataset_file_name == Datasets.WineQuality:
+            self.X = self.dataset.drop('quality', axis=1)
+            self.y = self.dataset['quality']
 
     def train_test_split(self, test_size: float = 0.2, random_state: int = 42) -> None:
         """
