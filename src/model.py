@@ -5,7 +5,7 @@ from src.instance import Instance
 from src.influential_instances_identification import InfluentialInstancesIdentification
 from src.cleaning import clean_data
 import numpy as np
-from sklearn.metrics import fbeta_score, mean_squared_error, r2_score, accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import fbeta_score, mean_squared_error, r2_score, accuracy_score, precision_score, recall_score, f1_score, mean_absolute_error
 
 class Model: 
     """
@@ -520,6 +520,27 @@ class Model:
         self.data.set_dataset_rmse(self.rmse)
         return self.rmse
 
+    def get_mae(self, forInstance: False) -> float:
+        """
+        `get_mae` function
+
+        Description:
+            This function calculates and returns the mean absolute error of the model.
+        
+        Args:
+            `forInstance` (`bool`): Set this to `True` only if the function is called to calculate the MAE for an instance.
+        
+        Returns:
+            `float`: The mean absolute error of the model.
+        """
+        if self.predictions is None:
+            raise ValueError("The model has not made any predictions yet. Please use the `predict()` function first.")
+        self.mae = mean_absolute_error(self.data.get_y_test(), self.predictions)
+        if forInstance:
+            return self.mae
+        self.data.set_dataset_mae(self.mae)
+        return self.mae
+
     def get_accuracy(self, forInstance: False) -> float:
         """
         `get_accuracy` function
@@ -609,7 +630,8 @@ class Model:
             
             This is done for each row in the dataset. 
             
-            The accuracy, precision, recall and f1 score of each deducted instance is then calculated and stored in the corresponding `Instance` of the `Data` object.
+            In the case of classification problems, the accuracy, precision, recall and f1 score of each deducted instance is then calculated and stored in the corresponding `Instance` of the `Data` object.
+            In the case of regression probels, the MSE, RMSE and MAE of each deducted instance is then calculated and stored in the corresponding `Instance` of the `Data` object.
 
         Args:
             `None`
@@ -618,32 +640,56 @@ class Model:
             `bool`: `True` if the influential instances were found, `False` otherwise.
         """
         self.data.set_instances()
-        for i, instance in self.data.get_X_train().iterrows():
-            print(f"Training for instance {i}...", end="\r", flush=True)
-            X_train = self.data.get_X_train().copy()
-            X_train.drop(i, axis=0, inplace=True)
-            y_train = self.data.get_y_train().copy()
-            y_train.drop(i, axis=0, inplace=True)
-            self.fit(X_train=X_train, y_train=y_train)
-            self.predict(self.data.get_X_test())
-            if self.type == ModelType.BinaryClassification or self.type == ModelType.MulticlassClassification:
-                instance_accuracy = self.get_accuracy(forInstance=True)
-                instance_f1_score = self.get_f1_score(forInstance=True)
-                instance_precision = self.get_precision(forInstance=True)
-                instance_recall = self.get_recall(forInstance=True)
+        if self.type == ModelType.BinaryClassification or self.type == ModelType.MulticlassClassification:
+            for i, instance in self.data.get_X_train().iterrows():
+                print(f"Training for instance {i}...", end="\r", flush=True)
+                X_train = self.data.get_X_train().copy()
+                X_train.drop(i, axis=0, inplace=True)
+                y_train = self.data.get_y_train().copy()
+                y_train.drop(i, axis=0, inplace=True)
+                self.fit(X_train=X_train, y_train=y_train)
+                self.predict(self.data.get_X_test())
+                if self.type == ModelType.BinaryClassification or self.type == ModelType.MulticlassClassification:
+                    instance_accuracy = self.get_accuracy(forInstance=True)
+                    instance_f1_score = self.get_f1_score(forInstance=True)
+                    instance_precision = self.get_precision(forInstance=True)
+                    instance_recall = self.get_recall(forInstance=True)
+                    instance = Instance(i)
+                    instance.set_accuracy(instance_accuracy)
+                    instance.set_f1_score(instance_f1_score)
+                    instance.set_precision(instance_precision)
+                    instance.set_recall(instance_recall)
+                    instance.calculate_accuracy_variance(self.data.get_dataset_accuracy())
+                    instance.calculate_f1_score_variance(self.data.get_dataset_f1_score())
+                    instance.calculate_precision_variance(self.data.get_dataset_precision())
+                    instance.calculate_recall_variance(self.data.get_dataset_recall())
+                    if instance.is_influential(self.type):
+                        self.data.set_instance_as_influential(i)
+            influential_instances_found = self.__identify_all_influential_instances()
+            return influential_instances_found
+        elif self.type == ModelType.Regression:
+            for i, instance in self.data.get_X_train().iterrows():
+                print(f"Training for instance {i}...", end="\r", flush=True)
+                X_train = self.data.get_X_train().copy()
+                X_train.drop(i, axis=0, inplace=True)
+                y_train = self.data.get_y_train().copy()
+                y_train.drop(i, axis=0, inplace=True)
+                self.fit(X_train=X_train, y_train=y_train)
+                self.predict(self.data.get_X_test())
+                instance_mse = self.get_mse(forInstance=True)
+                instance_rmse = self.get_rmse(forInstance=True)
+                instance_mae = self.get_mae(forInstance=True)
                 instance = Instance(i)
-                instance.set_accuracy(instance_accuracy)
-                instance.set_f1_score(instance_f1_score)
-                instance.set_precision(instance_precision)
-                instance.set_recall(instance_recall)
-                instance.calculate_accuracy_variance(self.data.get_dataset_accuracy())
-                instance.calculate_f1_score_variance(self.data.get_dataset_f1_score())
-                instance.calculate_precision_variance(self.data.get_dataset_precision())
-                instance.calculate_recall_variance(self.data.get_dataset_recall())
-                if instance.is_influential():
+                instance.set_mse(instance_mse)
+                instance.set_rmse(instance_rmse)
+                instance.set_mae(instance_mae)
+                instance.calculate_mse_variance(self.data.get_dataset_mse())
+                instance.calculate_rmse_variance(self.data.get_dataset_rmse())
+                instance.calculate_mae_variance(self.data.get_dataset_mae())
+                if instance.is_influential(model_type=self.type):
                     self.data.set_instance_as_influential(i)
-        influential_instances_found = self.__identify_all_influential_instances()
-        return influential_instances_found
+            influential_instances_found = self.__identify_all_influential_instances()
+            return influential_instances_found
  
     def __identify_all_influential_instances(self) -> None:
         """

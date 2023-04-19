@@ -1,4 +1,5 @@
 from sklearn.metrics import mean_squared_error, r2_score
+from src.enums import ModelType
 import pandas as pd
 import numpy as np
 
@@ -39,6 +40,9 @@ class Instance():
         self.precision_variance = None
         self.recall_variance = None
         self.f1_score_variance = None
+        self.mse_variance = None
+        self.rmse_variance = None
+        self.mae_variance = None
         self.weights = None
         self.overall_beta = None
         self.dfbeta = None
@@ -165,6 +169,54 @@ class Instance():
         """
         return self.beta
     
+    def set_mse(self, mse) -> None:
+        """
+        `set_mse` function
+
+        Description:
+            This function sets the MSE value for each instance in the dataset.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+            mse (`float`): The MSE value for each instance in the dataset.
+
+        Returns:
+            `None`
+        """
+        self.mse = mse
+    
+    def set_rmse(self, rmse) -> None:
+        """
+        `set_rmse` function
+
+        Description:
+            This function sets the rmse value for each instance in the dataset.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+            rmse (`float`): The RMSE value for each instance in the dataset.
+
+        Returns:
+            `None`
+        """
+        self.rmse = rmse
+    
+    def set_mae(self, mae) -> None:
+        """
+        `set_mae` function
+
+        Description:
+            This function sets the MAE value for each instance in the dataset.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+            mae (`float`): The MAE value for each instance in the dataset.
+
+        Returns:
+            `None`
+        """
+        self.mae = mae
+
     def get_rmse(self) -> float:
         """
         `get_rmse` function
@@ -342,6 +394,57 @@ class Instance():
         self.dataset_f1_score = dataset_f1_score
         self.f1_score_variance = self.f1_score - dataset_f1_score
     
+    def calculate_rmse_variance(self, dataset_rmse: float) -> None:
+        """
+        `calculate_rmse_variance` function
+
+        Description:
+            This function calculates the rmse variance value for each instance in the dataset.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+            `dataset_rmse` (`float`): The rmse value for the dataset.
+
+        Returns:
+            `None`
+        """
+        self.dataset_rmse = dataset_rmse
+        self.rmse_variance = self.rmse - dataset_rmse
+    
+    def calculate_mse_variance(self, dataset_mse: float) -> None:
+        """
+        `calculate_mse_variance` function
+
+        Description:
+            This function calculates the mse variance value for each instance in the dataset.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+            `dataset_mse` (`float`): The mse value for the dataset.
+
+        Returns:
+            `None`
+        """
+        self.dataset_mse = dataset_mse
+        self.mse_variance = self.mse - dataset_mse
+    
+    def calculate_mae_variance(self, dataset_mae: float) -> None:
+        """
+        `calculate_mae_variance` function
+
+        Description:
+            This function calculates the mae variance value for each instance in the dataset.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+            `dataset_mae` (`float`): The mae value for the dataset.
+
+        Returns:
+            `None`
+        """
+        self.dataset_mae = dataset_mae
+        self.mae_variance = self.mae - dataset_mae
+
     def get_accuracy_variance(self) -> float:
         """
         `get_accuracy_variance` function
@@ -402,7 +505,52 @@ class Instance():
         """
         return self.f1_score_variance
     
-    def is_influential(self) -> bool:
+    def get_rmse_variance(self) -> float:
+        """
+        `get_rmse_variance` function
+
+        Description:
+            This function returns the rmse variance value for each instance in the dataset.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+
+        Returns:
+            rmse_variance (`float`): The rmse variance value for each instance in the dataset.
+        """
+        return self.rmse_variance
+
+    def get_mse_variance(self) -> float:
+        """
+        `get_mse_variance` function
+
+        Description:
+            This function returns the mse variance value for each instance in the dataset.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+
+        Returns:
+            mse_variance (`float`): The mse variance value for each instance in the dataset.
+        """
+        return self.mse_variance
+
+    def get_mae_variance(self) -> float:
+        """
+        `get_mae_variance` function
+
+        Description:
+            This function returns the mae variance value for each instance in the dataset.
+
+        Args:
+            `self` (`Instance`): The instance of the class `Instance`.
+
+        Returns:
+            mae_variance (`float`): The mae variance value for each instance in the dataset.
+        """
+        return self.mae_variance
+
+    def is_influential(self, model_type: ModelType) -> bool:
         """
         `is_influential` function
 
@@ -411,11 +559,18 @@ class Instance():
 
         Args:
             `self` (`Instance`): The instance of the class `Instance`.
+            `model_type` (`ModelType`): The type of the model.
 
         Returns:
             influential (`bool`): Whether the instance is influential or not.
         """
-        self.instance_score = abs(self.accuracy_variance) + abs(self.precision_variance) + abs(self.recall_variance) + abs(self.f1_score_variance)
-        if self.instance_score > 0:
-            self.influential = True
-        return self.influential
+        if model_type == ModelType.BinaryClassification or model_type == ModelType.MulticlassClassification:
+            self.instance_score = abs(self.accuracy_variance) + abs(self.precision_variance) + abs(self.recall_variance) + abs(self.f1_score_variance)
+            if self.instance_score > 0:
+                self.influential = True
+            return self.influential
+        elif model_type == ModelType.Regression:
+            self.instance_score = abs(self.rmse_variance) + abs(self.mse_variance) + abs(self.mae_variance)
+            if self.instance_score > 1:
+                self.influential = True
+            return self.influential
