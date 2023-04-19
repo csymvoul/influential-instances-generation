@@ -1,5 +1,5 @@
 import pandas as pd
-from src.enums import ModelType, ModelName
+from src.enums import ModelType, ModelName, Datasets
 from src.data import Data
 from src.instance import Instance
 from src.influential_instances_identification import InfluentialInstancesIdentification
@@ -21,6 +21,7 @@ class Model:
             The constructor of the `Model` class.
 
         Args: 
+            * model_type (`ModelType`): The type of the model.
             * model_name (`ModelName`): The name of the model. 
                 * Default value is `ModelName.LogisticRegression`. 
                 * Other values are `ModelName.KNeighborsClassifier`, `ModelName.SVC`, `ModelName.KMeans`,
@@ -36,11 +37,10 @@ class Model:
         """
         self.model_name = model_name
         self.model = None
+        self.data = data
         self.set_model(model_name)
         self.set_type()
         self.params = None
-        self.data = data
-        # self.data.clean_data()
         self.y_pred = None
         self.y_pred_proba = None
         self.beta = None
@@ -165,33 +165,69 @@ class Model:
             `None`
         """
         if self.model_name == ModelName.LogisticRegression:
-            self.type = ModelType.BinaryClassification
+            if self.data.dataset_file_name == Datasets.BreastCancer or self.data.dataset_file_name == Datasets.CervicalCancer or self.data.dataset_file_name == Datasets.Corral or self.data.dataset_file_name == Datasets.Mifem or self.data.dataset_file_name == Datasets.XD6:
+                self.type = ModelType.BinaryClassification
+            else:
+                self.type = ModelType.MulticlassClassification
         elif self.model_name == ModelName.KMeans:
             self.type = ModelType.Clustering
         elif self.model_name == ModelName.LinearRegression:
             self.type = ModelType.Regression
         elif self.model_name == ModelName.KNeighborsClassifier:
-            self.type = ModelType.MulticlassClassification
+            if self.data.dataset_file_name == Datasets.BreastCancer or self.data.dataset_file_name == Datasets.CervicalCancer or self.data.dataset_file_name == Datasets.Corral or self.data.dataset_file_name == Datasets.Mifem or self.data.dataset_file_name == Datasets.XD6:
+                self.type = ModelType.BinaryClassification
+            else:
+                self.type = ModelType.MulticlassClassification
         elif self.model_name == ModelName.SVC:
-            self.type = ModelType.MulticlassClassification
+            if self.data.dataset_file_name == Datasets.BreastCancer or self.data.dataset_file_name == Datasets.CervicalCancer or self.data.dataset_file_name == Datasets.Corral or self.data.dataset_file_name == Datasets.Mifem or self.data.dataset_file_name == Datasets.XD6:
+                self.type = ModelType.BinaryClassification
+            else:
+                self.type = ModelType.MulticlassClassification
         elif self.model_name == ModelName.DecisionTreeClassifier:
-            self.type = ModelType.MulticlassClassification
+            if self.data.dataset_file_name == Datasets.BreastCancer or self.data.dataset_file_name == Datasets.CervicalCancer or self.data.dataset_file_name == Datasets.Corral or self.data.dataset_file_name == Datasets.Mifem or self.data.dataset_file_name == Datasets.XD6:
+                self.type = ModelType.BinaryClassification
+            else:
+                self.type = ModelType.MulticlassClassification
         elif self.model_name == ModelName.RandomForestClassifier:
-            self.type = ModelType.MulticlassClassification
+            if self.data.dataset_file_name == Datasets.BreastCancer or self.data.dataset_file_name == Datasets.CervicalCancer or self.data.dataset_file_name == Datasets.Corral or self.data.dataset_file_name == Datasets.Mifem or self.data.dataset_file_name == Datasets.XD6:
+                self.type = ModelType.BinaryClassification
+            else:
+                self.type = ModelType.MulticlassClassification
         elif self.model_name == ModelName.GradientBoostingClassifier:
-            self.type = ModelType.MulticlassClassification
+            if self.data.dataset_file_name == Datasets.BreastCancer or self.data.dataset_file_name == Datasets.CervicalCancer or self.data.dataset_file_name == Datasets.Corral or self.data.dataset_file_name == Datasets.Mifem or self.data.dataset_file_name == Datasets.XD6:
+                self.type = ModelType.BinaryClassification
+            else:
+                self.type = ModelType.MulticlassClassification
         elif self.model_name == ModelName.XGBClassifier:
-            self.type = ModelType.MulticlassClassification
+            if self.data.dataset_file_name == Datasets.BreastCancer or self.data.dataset_file_name == Datasets.CervicalCancer or self.data.dataset_file_name == Datasets.Corral or self.data.dataset_file_name == Datasets.Mifem or self.data.dataset_file_name == Datasets.XD6:
+                self.type = ModelType.BinaryClassification
+            else:
+                self.type = ModelType.MulticlassClassification
         elif self.model_name ==  ModelName.CatBoostClassifier:
-            self.type = ModelType.MulticlassClassification
+            if self.data.dataset_file_name == Datasets.BreastCancer or self.data.dataset_file_name == Datasets.CervicalCancer or self.data.dataset_file_name == Datasets.Corral or self.data.dataset_file_name == Datasets.Mifem or self.data.dataset_file_name == Datasets.XD6:
+                self.type = ModelType.BinaryClassification
+            else:
+                self.type = ModelType.MulticlassClassification
         elif self.model_name == ModelName.MLPClassifier:
-            self.type = ModelType.MulticlassClassification
+            if self.data.dataset_file_name == Datasets.BreastCancer or self.data.dataset_file_name == Datasets.CervicalCancer or self.data.dataset_file_name == Datasets.Corral or self.data.dataset_file_name == Datasets.Mifem or self.data.dataset_file_name == Datasets.XD6:
+                self.type = ModelType.BinaryClassification
+            else:
+                self.type = ModelType.MulticlassClassification
         elif self.model_name == ModelName.GaussianNB:
-            self.type = ModelType.MulticlassClassification
+            if self.data.dataset_file_name == Datasets.BreastCancer or self.data.dataset_file_name == Datasets.CervicalCancer or self.data.dataset_file_name == Datasets.Corral or self.data.dataset_file_name == Datasets.Mifem or self.data.dataset_file_name == Datasets.XD6:
+                self.type = ModelType.BinaryClassification
+            else:
+                self.type = ModelType.MulticlassClassification
         elif self.model_name == ModelName.LinearDiscriminantAnalysis:
-            self.type = ModelType.MulticlassClassification
+            if self.data.dataset_file_name == Datasets.BreastCancer or self.data.dataset_file_name == Datasets.CervicalCancer or self.data.dataset_file_name == Datasets.Corral or self.data.dataset_file_name == Datasets.Mifem or self.data.dataset_file_name == Datasets.XD6:
+                self.type = ModelType.BinaryClassification
+            else:
+                self.type = ModelType.MulticlassClassification
         elif self.model_name == ModelName.QuadraticDiscriminantAnalysis:
-            self.type = ModelType.MulticlassClassification
+            if self.data.dataset_file_name == Datasets.BreastCancer or self.data.dataset_file_name == Datasets.CervicalCancer or self.data.dataset_file_name == Datasets.Corral or self.data.dataset_file_name == Datasets.Mifem or self.data.dataset_file_name == Datasets.XD6:
+                self.type = ModelType.BinaryClassification
+            else:
+                self.type = ModelType.MulticlassClassification
         elif self.model_name == ModelName.DecisionTreeRegressor:
             self.type = ModelType.Regression
         else:
@@ -575,11 +611,18 @@ class Model:
         Returns:
             `float`: The f1 score of the model.
         """
-        self.f1_score = f1_score(self.data.get_y_test(), self.predictions)
-        if forInstance:
+        if self.type == ModelType.BinaryClassification:
+            self.f1_score = f1_score(self.data.get_y_test(), self.predictions)
+            if forInstance:
+                return self.f1_score
+            self.data.set_dataset_f1_score(self.f1_score)
             return self.f1_score
-        self.data.set_dataset_f1_score(self.f1_score)
-        return self.f1_score
+        elif self.type == ModelType.MulticlassClassification:
+            self.f1_score = f1_score(self.data.get_y_test(), self.predictions, average='micro')
+            if forInstance:
+                return self.f1_score
+            self.data.set_dataset_f1_score(self.f1_score)
+            return self.f1_score
 
     def get_precision(self, forInstance: False) -> float:
         """
@@ -595,11 +638,18 @@ class Model:
         Returns:
             `float`: The precision of the model.
         """
-        self.precision = precision_score(self.data.get_y_test(), self.predictions)
-        if forInstance:
+        if self.type == ModelType.BinaryClassification:
+            self.precision = precision_score(self.data.get_y_test(), self.predictions)
+            if forInstance:
+                return self.precision
+            self.data.set_dataset_precision(self.precision)
             return self.precision
-        self.data.set_dataset_precision(self.precision)
-        return self.precision
+        elif self.type == ModelType.MulticlassClassification:
+            self.precision = precision_score(self.data.get_y_test(), self.predictions, average='micro')
+            if forInstance:
+                return self.precision
+            self.data.set_dataset_precision(self.precision)
+            return self.precision
     
     def get_recall(self, forInstance: False) -> float:
         """
@@ -615,11 +665,18 @@ class Model:
         Returns:
             `float`: The recall of the model.
         """
-        self.recall = recall_score(self.data.get_y_test(), self.predictions)
-        if forInstance:
+        if self.type == ModelType.BinaryClassification:
+            self.recall = recall_score(self.data.get_y_test(), self.predictions)
+            if forInstance:
+                return self.recall
+            self.data.set_dataset_recall(self.recall)
             return self.recall
-        self.data.set_dataset_recall(self.recall)
-        return self.recall
+        elif self.type == ModelType.MulticlassClassification:
+            self.recall = recall_score(self.data.get_y_test(), self.predictions, average='micro')
+            if forInstance:
+                return self.recall
+            self.data.set_dataset_recall(self.recall)
+            return self.recall
 
     def train_for_influential_instances(self) -> None:
         """
