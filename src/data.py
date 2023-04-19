@@ -502,6 +502,36 @@ class Data:
         """
         return self.dataset_mse
 
+    def set_dataset_mae(self, dataset_mae:float) -> None:
+        """
+        `set_dataset_mae` function
+
+        Description:
+            This function set the MAE of the dataset.
+
+        Args:
+            `dataset_mae` (`float`): The MAE of the dataset.
+
+        Returns:
+            `None`
+        """
+        self.dataset_mae = dataset_mae
+    
+    def get_dataset_mae(self) -> float:
+        """
+        `get_dataset_mae` function
+
+        Description:
+            This function returns the MAE of the dataset.
+
+        Args:
+            `None`
+
+        Returns:
+            `float`: The MAE of the dataset.
+        """
+        return self.dataset_mae
+
     def set_dataset_rmse(self, dataset_rmse:float) -> None:
         """
         `set_dataset_rmse` function
