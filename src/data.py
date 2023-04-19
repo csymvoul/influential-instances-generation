@@ -177,6 +177,8 @@ class Data:
             self.dataset['hichol'] = self.dataset['hichol'].replace('y', 2).replace('n', 1).replace('nk', 0)
             self.dataset['angina'] = self.dataset['angina'].replace('y', 2).replace('n', 1).replace('nk', 0)
             self.dataset['stroke'] = self.dataset['stroke'].replace('y', 2).replace('n', 1).replace('nk', 0) 
+        elif self.dataset_file_name == Datasets.StockMarket:
+            self.dataset.drop(['TradeDate'], axis=1, inplace=True)
 
     def normalize_data(self) -> None:
         """
@@ -224,6 +226,10 @@ class Data:
         elif self.dataset_file_name == Datasets.XD6:
             self.X = self.dataset.drop('Class', axis=1)
             self.y = self.dataset['Class']
+        elif self.dataset_file_name == Datasets.StockMarket:
+            self.clean_data()
+            self.X = self.dataset.drop('Close', axis=1)
+            self.y = self.dataset['Close']
         elif self.dataset_file_name == Datasets.WineQuality:
             self.X = self.dataset.drop('quality', axis=1)
             self.y = self.dataset['quality']
@@ -242,7 +248,14 @@ class Data:
             `None`
         """
         self.split_dataset()
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, 
+        if self.dataset_file_name == Datasets.StockMarket:
+            self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, 
+                                                                                self.y, 
+                                                                                test_size = test_size,
+                                                                                shuffle=False, 
+                                                                                random_state = random_state)
+        else:
+            self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, 
                                                                                 self.y, 
                                                                                 test_size = test_size, 
                                                                                 random_state = random_state)
@@ -458,6 +471,36 @@ class Data:
             `None`
         """
         self.influential_instances.append(index)
+
+    def set_dataset_mse(self, dataset_mse:float) -> None:
+        """
+        `set_dataset_mse` function
+
+        Description:
+            This function set the MSE of the dataset.
+
+        Args:
+            `dataset_mse` (`float`): The MSE of the dataset.
+
+        Returns:
+            `None`
+        """
+        self.dataset_mse = dataset_mse
+    
+    def get_dataset_mse(self) -> float:
+        """
+        `get_dataset_mse` function
+
+        Description:
+            This function returns the MSE of the dataset.
+
+        Args:
+            `None`
+
+        Returns:
+            `float`: The MSE of the dataset.
+        """
+        return self.dataset_mse
 
     def set_dataset_rmse(self, dataset_rmse:float) -> None:
         """
