@@ -571,6 +571,6 @@ class Instance():
             return self.influential
         elif model_type == ModelType.Regression:
             self.instance_score = abs(self.rmse_variance) + abs(self.mse_variance) + abs(self.mae_variance)
-            if self.instance_score > 1:
+            if self.instance_score > 0.2:
                 self.influential = True
             return self.influential
