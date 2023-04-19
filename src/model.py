@@ -128,6 +128,10 @@ class Model:
             from sklearn.linear_model import LinearRegression
             self.model_name = ModelName.LinearRegression
             self.model = LinearRegression()
+        elif model_name == ModelName.DecisionTreeRegressor:
+            from sklearn.tree import DecisionTreeRegressor
+            self.model_name = ModelName.DecisionTreeRegressor
+            self.model = DecisionTreeRegressor()
         else:
             raise ValueError('Invalid model name.')
 
@@ -188,6 +192,8 @@ class Model:
             self.type = ModelType.MulticlassClassification
         elif self.model_name == ModelName.QuadraticDiscriminantAnalysis:
             self.type = ModelType.MulticlassClassification
+        elif self.model_name == ModelName.DecisionTreeRegressor:
+            self.type = ModelType.Regression
         else:
             raise ValueError('Invalid model name.')
 
@@ -331,6 +337,8 @@ class Model:
             self.model.fit(X_train, y_train)
         elif self.model_name == ModelName.QuadraticDiscriminantAnalysis:
             self.model.fit(X_train, y_train)
+        elif self.model_name == ModelName.DecisionTreeRegressor:
+            self.model.fit(X_train, y_train)
 
     def get_weights(self):
         """
@@ -451,6 +459,8 @@ class Model:
             self.predictions = self.model.predict(input)
         elif self.model_name == ModelName.LinearRegression:
             self.predictions = self.model.predict(input)
+        elif self.model_name == ModelName.DecisionTreeRegressor:
+            self.predictions = self.model.predict(input)
 
     def get_predictions(self) -> (pd.Series | np.ndarray | pd.DataFrame | None):
         """
@@ -467,15 +477,37 @@ class Model:
         """
         return self.predictions
 
-    def calculate_rmse(self):
+    def get_mse(self, forInstance: False) -> float:
         """
-        `calculate_rmse` function
+        `get_mse` function
 
         Description:
-            This function calculates the root mean squared error of the model.
+            This function calculates and returns the mean squared error of the model.
         
         Args:
-            `None`
+            `forInstance` (`bool`): Set this to `True` only if the function is called to calculate the MSE for an instance.
+        
+        Returns:
+            `float`: The mean squared error of the model.
+        """
+        if self.predictions is None:
+            raise ValueError("The model has not made any predictions yet. Please use the `predict()` function first.")
+        
+        self.mse = mean_squared_error(self.data.get_y_test(), self.predictions)
+        if forInstance:
+            return self.mse
+        self.data.set_dataset_mse(self.mse)
+        return self.mse
+    
+    def get_rmse(self, forInstance: False) -> float:
+        """
+        `get_rmse` function
+
+        Description:
+            This function caclulates and returns the root mean squared error of the model.
+        
+        Args:
+            `forInstance` (`bool`): Set this to `True` only if the function is called to calculate the RMSE for an instance.
         
         Returns:
             `float`: The root mean squared error of the model.
@@ -483,22 +515,9 @@ class Model:
         if self.predictions is None:
             raise ValueError("The model has not made any predictions yet. Please use the `predict()` function first.")
         self.rmse = np.sqrt(mean_squared_error(self.data.get_y_test(), self.predictions))
-
+        if forInstance:
+            return self.rmse
         self.data.set_dataset_rmse(self.rmse)
-    
-    def get_rmse(self) -> float:
-        """
-        `get_rmse` function
-
-        Description:
-            This function returns the root mean squared error of the model.
-        
-        Args:
-            `None`
-        
-        Returns:
-            `float`: The root mean squared error of the model.
-        """
         return self.rmse
 
     def get_accuracy(self, forInstance: False) -> float:

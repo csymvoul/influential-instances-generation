@@ -13,6 +13,9 @@ class Datasets(Enum):
     Mifem = 'Mifem'
     Corral = 'Corral'
     WineQuality = 'WineQuality'
+    StockMarket = 'StockMarket'
+    UsersMobility = 'UsersMobility'
+
 
 class ModelName(Enum):
     """
@@ -35,6 +38,7 @@ class ModelName(Enum):
     LinearDiscriminantAnalysis = 'LinearDiscriminantAnalysis'
     QuadraticDiscriminantAnalysis = 'QuadraticDiscriminantAnalysis'
     LinearRegression = 'LinearRegression'
+    DecisionTreeRegressor = 'DecisionTreeRegressor'
 
 class ModelType(Enum):
     """

@@ -30,7 +30,10 @@ class ArgsParser:
                                     * CervicalCancer 
                                     * XD6 
                                     * Mifem
-                                    * Corral'''))
+                                    * Corral
+                                    * WineQuality
+                                    * StockMarket
+                                    * UsersMobility'''))
         parser.add_argument("--model", 
                             help=textwrap.dedent('''\
                                 The model which will be used for training.
@@ -48,6 +51,7 @@ class ArgsParser:
                                     * GaussianNB 
                                     * LinearDiscriminantAnalysis 
                                     * QuadraticDiscriminantAnalysis 
-                                    * LinearRegression'''))
+                                    * LinearRegression
+                                    * DecisionTreeRegressor'''))
 
         return parser.parse_args()
