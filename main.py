@@ -86,5 +86,9 @@ if model.get_type() == ModelType.BinaryClassification or model.get_type() == Mod
         print("Time: \t\t\t{0} \t\t\t\t {1}".format(round(first_results[5], 3), round(final_results[5], 3)))
         print("Dataset decrease: \t{0}%".format(round((1 - final_results[4] / first_results[4]) * 100, 2)))
 elif model.get_type() == ModelType.Regression:
-    predictions = model.predict(model.get_data().get_X_test())
-    first_results.append(model.get_mse(predictions))
+    model.predict(model.get_data().get_X_test())
+    first_results.append(model.get_mse(forInstance=False))
+    first_results.append(model.get_rmse(forInstance=False))
+    print("\n\n\t\t\tInitial results: \t\t Final results:")
+    print("MSE: \t\t\t{0}".format(round(first_results[0], 3)))
+    print("RMSE: \t\t\t{0}".format(round(first_results[1], 3)))
