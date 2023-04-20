@@ -37,7 +37,7 @@ Arguments:
         Model:          RandomForestClassifier
 
 Information:
-        Model type:     MulticlassClassification
+        Model type:     BinaryClassification
         Model name:     RandomForestClassifier
         Model:          <class 'sklearn.ensemble._forest.RandomForestClassifier'>
         Dataset:        BreastCancer
@@ -46,21 +46,22 @@ Fitting the model...
 Model fitted.
 
 Identifying the influential instances...
-Number of influential instances:                 57
+Number of influential instances:                 54
 Setting the threshold distance...
-Threshold distance:                              978.6299
-Current number of influential instances:         57
-Final number of influential instances:           68
-Number of influential instances:                 68
+Threshold distance:                              1231.9743
+Current number of influential instances:         54
+Final number of influential instances:           55
+Number of influential instances:                 55
 Training with influential instances...
 
 
                         Initial results:                 Final results:
-Accuracy:               0.965                            0.965
-Precision:              0.976                            1.0
-Recall:                 0.93                             0.907
-F1 score:               0.952                            0.951
-Dataset size:           455                              68
-Time:                   0.083                            0.039
-Dataset decrease:       85.05%
+Accuracy:               0.965                            0.974
+Precision:              0.976                            0.935
+Recall:                 0.93                             1.0
+F1 score:               0.952                            0.966
+Dataset size:           455                              55
+Time:                   0.088                            0.044
+Dataset size:           455                              55
+Dataset decrease:       87.91%
 ```
