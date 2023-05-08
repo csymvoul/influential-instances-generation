@@ -15,6 +15,7 @@ class Datasets(Enum):
     WineQuality = 'WineQuality'
     StockMarket = 'StockMarket'
     UsersMobility = 'UsersMobility'
+    Services = 'Services'
 
 
 class ModelName(Enum):

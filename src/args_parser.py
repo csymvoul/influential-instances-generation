@@ -33,7 +33,8 @@ class ArgsParser:
                                     * Corral
                                     * WineQuality
                                     * StockMarket
-                                    * UsersMobility'''))
+                                    * UsersMobility
+                                    * Services'''))
         parser.add_argument("--model", 
                             help=textwrap.dedent('''\
                                 The model which will be used for training.
