@@ -17,7 +17,6 @@ class Datasets(Enum):
     UsersMobility = 'UsersMobility'
     Services = 'Services'
 
-
 class ModelName(Enum):
     """
     `ModelName` enum class. An `Enum` class that contains the names of the available models.
