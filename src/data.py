@@ -237,8 +237,8 @@ class Data:
             self.X = self.dataset.drop('quality', axis=1)
             self.y = self.dataset['quality']
         elif self.dataset_file_name == Datasets.Services: 
-            self.X = self.dataset.drop('label', axis=1)
-            self.y = self.dataset['label']
+            self.X = self.dataset.drop('labels', axis=1)
+            self.y = self.dataset['labels']
 
     def train_test_split(self, test_size: float = 0.2, random_state: int = 42) -> None:
         """
