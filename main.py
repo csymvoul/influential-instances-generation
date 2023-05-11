@@ -3,6 +3,7 @@ from src.data import Data
 from src.enums import ModelName, Datasets, ModelType
 from src.model import Model
 from src.args_parser import ArgsParser
+from src.services_visualisation import visualize_services_predictions
 import time
 
 args = ArgsParser().parse_args()
@@ -52,6 +53,7 @@ model.fit()
 end_time = time.time()
 print("Model fitted.\n")
 first_results = []
+
 # Prediction and evaluation
 if model.get_type() == ModelType.BinaryClassification or model.get_type() == ModelType.MulticlassClassification:
     model.predict(model.get_data().get_X_test())
@@ -87,10 +89,9 @@ if model.get_type() == ModelType.BinaryClassification or model.get_type() == Mod
         print("Dataset size: \t\t{0} \t\t\t\t {1}".format(first_results[4], final_results[4]))
         print("Dataset decrease: \t{0}%".format(round((1 - final_results[4] / first_results[4]) * 100, 2)))
 
-        print("\nSample of predictions:")
-        print("Real value \t\t Predicted value")
-        for i in range(10):
-            print("{0} \t\t\t {1}".format(model.get_data().get_y_test().iloc[i], int(model.get_predictions()[i])))
+        if model.get_data().get_dataset_file_name() == Datasets.Services:
+            visualize_services_predictions(model)
+
 elif model.get_type() == ModelType.Regression:
     model.predict(model.get_data().get_X_test())
     first_results.append(model.get_mse(forInstance=False))
