@@ -86,6 +86,11 @@ if model.get_type() == ModelType.BinaryClassification or model.get_type() == Mod
         print("Time: \t\t\t{0} \t\t\t\t {1}".format(round(first_results[5], 3), round(final_results[5], 3)))
         print("Dataset size: \t\t{0} \t\t\t\t {1}".format(first_results[4], final_results[4]))
         print("Dataset decrease: \t{0}%".format(round((1 - final_results[4] / first_results[4]) * 100, 2)))
+
+        print("\nSample of predictions:")
+        print("Real value \t\t Predicted value")
+        for i in range(10):
+            print("{0} \t\t\t {1}".format(model.get_data().get_y_test().iloc[i], int(model.get_predictions()[i])))
 elif model.get_type() == ModelType.Regression:
     model.predict(model.get_data().get_X_test())
     first_results.append(model.get_mse(forInstance=False))
@@ -113,10 +118,4 @@ elif model.get_type() == ModelType.Regression:
         print("Time: \t\t\t{0}\t\t\t\t {1}".format(round(first_results[4], 3), round(final_results[4], 3)))
         print("Dataset size: \t\t{0}\t\t\t\t {1}".format(first_results[3], final_results[3]))
         print("Dataset decrease: \t{0}%".format(round((1 - final_results[3] / first_results[3]) * 100, 2)))
-
-        # print sample of predictions
-        print("\nSample of predictions:")
-        print("Real value \t\t Predicted value")
-        for i in range(10):
-            print("{0} \t\t\t {1}".format(model.get_data().get_y_test().iloc[i], model.get_y_pred()[i]))
     
