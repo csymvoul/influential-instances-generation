@@ -124,7 +124,7 @@ class InfluentialInstancesIdentification():
                     # CervicalCancer only has one influential instance, so we add 1 to the denominator to avoid division by zero
                     # Still this is an issue that needs to be addressed.
                     distances.append(md(instance.values.reshape(1, -1), instance2.values.reshape(1, -1))[0][0])
-        self.threshold_distance = sum(distances) / (1+len(distances))
+        self.threshold_distance = sum(distances) / (1+len(distances))*(1+len(distances))
         print("Threshold distance: \t\t\t\t", round(self.threshold_distance, 4))
 
     def get_influential_instances(self) -> pd.DataFrame:

@@ -179,6 +179,9 @@ class Data:
             self.dataset['stroke'] = self.dataset['stroke'].replace('y', 2).replace('n', 1).replace('nk', 0) 
         elif self.dataset_file_name == Datasets.StockMarket:
             self.dataset.drop(['TradeDate'], axis=1, inplace=True)
+        elif self.dataset_file_name == Datasets.Services: 
+            # 'gpu' 'serverless' 'rnn' 'docker' 'fpga' 'cnn' 'edge' 'knn' 'regression' 'linearprogramming'
+            self.dataset['label'] = self.dataset['label'].replace('gpu', 0).replace('serverless', 0).replace('rnn', 0).replace('docker', 0).replace('fpga', 0).replace('cnn', 0).replace('edge', 0).replace('knn', 1).replace('regression', 1).replace('linearprogramming', 1)
 
     def normalize_data(self) -> None:
         """
@@ -233,6 +236,9 @@ class Data:
         elif self.dataset_file_name == Datasets.WineQuality:
             self.X = self.dataset.drop('quality', axis=1)
             self.y = self.dataset['quality']
+        elif self.dataset_file_name == Datasets.Services: 
+            self.X = self.dataset.drop('labels', axis=1)
+            self.y = self.dataset['labels']
 
     def train_test_split(self, test_size: float = 0.2, random_state: int = 42) -> None:
         """

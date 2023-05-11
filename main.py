@@ -26,14 +26,14 @@ try:
 except:
     pass
     # Dataset not specified
-    warnings.warn('Dataset not specified. Using the default dataset (breast_cancer)')
+    warnings.warn('Dataset not specified! Using the default dataset (breast_cancer)')
     try: 
         # Model specified
         model_name = ModelName(args.model)
         model = Model(model_name=model_name)
     except:
         # Model not specified
-        warnings.warn('Model type not specified. Using the default model (LogisticRegression)', category=DeprecationWarning)
+        warnings.warn('Model type not specified. Using the default model (LogisticRegression)')
         model = Model()
 
 print("\nInformation:")
@@ -113,4 +113,10 @@ elif model.get_type() == ModelType.Regression:
         print("Time: \t\t\t{0}\t\t\t\t {1}".format(round(first_results[4], 3), round(final_results[4], 3)))
         print("Dataset size: \t\t{0}\t\t\t\t {1}".format(first_results[3], final_results[3]))
         print("Dataset decrease: \t{0}%".format(round((1 - final_results[3] / first_results[3]) * 100, 2)))
+
+        # print sample of predictions
+        print("\nSample of predictions:")
+        print("Real value \t\t Predicted value")
+        for i in range(10):
+            print("{0} \t\t\t {1}".format(model.get_data().get_y_test().iloc[i], model.get_y_pred()[i]))
     
