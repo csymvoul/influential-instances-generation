@@ -55,6 +55,10 @@ class Model:
         self.predictions = None
         self.influential_instances_identification = None
         self.influential_instances = None
+        self.instance_accuracy_list = []
+        self.instance_precision_list = []
+        self.instance_recall_list = []
+        self.instance_f1_score_list = []
 
     def set_model(self, model_name: ModelName) -> None:
         """
@@ -711,6 +715,11 @@ class Model:
                     instance_f1_score = self.get_f1_score(forInstance=True)
                     instance_precision = self.get_precision(forInstance=True)
                     instance_recall = self.get_recall(forInstance=True)
+                    self.instance_accuracy_list.append(instance_accuracy)
+                    self.instance_f1_score_list.append(instance_f1_score)
+                    self.instance_precision_list.append(instance_precision)
+                    self.instance_recall_list.append(instance_recall)
+
                     instance = Instance(i)
                     instance.set_accuracy(instance_accuracy)
                     instance.set_f1_score(instance_f1_score)
@@ -783,3 +792,63 @@ class Model:
         self.data.set_X_train(self.influential_instances.drop(self.data.get_y_train().name, axis=1))
         self.data.set_y_train(self.influential_instances[self.data.get_y_train().name])
         self.fit(self.data.get_X_train(), self.data.get_y_train())
+
+    def get_instance_accuracy_list(self) -> list:
+        """
+        `get_instance_accuracy_list` function
+
+        Description:
+            This function returns the list of accuracy values of the influential instances.
+
+        Args:
+            `None`
+
+        Returns:
+            `list`: The list of accuracy values of the influential instances.
+        """
+        return self.instance_accuracy_list
+
+    def get_instance_f1_score_list(self) -> list:
+        """
+        `get_instance_f1_score_list` function
+
+        Description:
+            This function returns the list of f1 score values of the influential instances.
+
+        Args:
+            `None`
+
+        Returns:
+            `list`: The list of f1 score values of the influential instances.
+        """
+        return self.instance_f1_score_list
+
+    def get_instance_precision_list(self) -> list:
+        """
+        `get_instance_precision_list` function
+
+        Description:
+            This function returns the list of precision values of the influential instances.
+
+        Args:
+            `None`
+
+        Returns:
+            `list`: The list of precision values of the influential instances.
+        """
+        return self.instance_precision_list 
+    
+    def get_instance_recall_list(self) -> list:
+        """
+        `get_instance_recall_list` function
+
+        Description:
+            This function returns the list of recall values of the influential instances.
+
+        Args:
+            `None`
+
+        Returns:
+            `list`: The list of recall values of the influential instances.
+        """
+        return self.instance_recall_list
