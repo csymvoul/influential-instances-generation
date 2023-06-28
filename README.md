@@ -1,4 +1,4 @@
-# Influential Instances identification
+# Influential Instances generation
 
 ## Project description
 This section describes the architecture of the proposed influence-based learning strategy. Starting with the goals, our objective is to enhance the developed ML or DL model by reducing the dataset, yet preserving the amount of information, in conformance to the infusion of causality through the data. 
